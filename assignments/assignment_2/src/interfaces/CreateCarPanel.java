@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 public class CreateCarPanel extends javax.swing.JPanel {
 
     private Fleet fleet;
+    private javax.swing.JLabel lastUpdatedOnLabel;
     /**
      * Creates new form CreateCarPanel
      */
@@ -29,7 +30,8 @@ public class CreateCarPanel extends javax.swing.JPanel {
         initComponents();
     }
     
-    public CreateCarPanel(Fleet fleet) {
+    public CreateCarPanel(javax.swing.JLabel lastUpdatedOn, Fleet fleet) {
+        this.lastUpdatedOnLabel = lastUpdatedOn;
         this.fleet = fleet;
         initComponents();
         hideErrorLabels();
@@ -317,6 +319,8 @@ public class CreateCarPanel extends javax.swing.JPanel {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         if(validateForm()) {
             Car newCar = new Car();
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat dfWithTime = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
             
             newCar.setSerialNumber(serialNumberTextField.getText());
             newCar.setManufacturer(manufacturerTextField.getText());
@@ -332,7 +336,6 @@ public class CreateCarPanel extends javax.swing.JPanel {
             newCar.setManufacturedYear(
                     Integer.parseInt(
                             (String) manufacturedYearElement.getSelectedItem()));
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             try {
                 newCar.setMaintenanceCertificateExpiry(
                         df.parse(certificateExpiryTextField.getText()));
@@ -345,6 +348,8 @@ public class CreateCarPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Car added successfully to the list!");
             hideErrorLabels();
             clearFields();
+            
+            lastUpdatedOnLabel.setText(dfWithTime.format(fleet.getLastModifiedOn()));
         } else {
             JOptionPane.showMessageDialog(null, "Invalid values in the form!");
         }

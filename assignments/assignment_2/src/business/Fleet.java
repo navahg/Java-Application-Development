@@ -101,6 +101,10 @@ public class Fleet {
         return null;
     }
     
+    public Integer getAvailibityNumber() {
+        return Car.getAvailabilityCount();
+    }
+    
     public ArrayList<Car> carsWithExpiredMaintenanceCertificates() {
         ArrayList<Car> results = new ArrayList<>();
         for(Car c : fleet) {
@@ -159,7 +163,7 @@ public class Fleet {
     private void restoreBackup() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(BACKUP_FILE));
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        DateFormat dfWithTime = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        DateFormat dfWithTime = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
         String line;
         String lastUpdatedOn = dfWithTime.format(new Date());
         boolean firstLine = true;
@@ -200,7 +204,7 @@ public class Fleet {
     public void backupData() throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(BACKUP_FILE));
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        DateFormat dfWithTime = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        DateFormat dfWithTime = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
         writer.write(dfWithTime.format(lastModifiedOn) + "\n");
         for(Car c : fleet) {
             writer.append(c.getSerialNumber() + "," +

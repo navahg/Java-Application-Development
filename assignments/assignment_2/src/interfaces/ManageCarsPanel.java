@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageCarsPanel extends javax.swing.JPanel {
 
+    private javax.swing.JLabel lastUpdatedOnLabel;
     private Fleet fleet;
     /**
      * Creates new form CreateCarPanel
@@ -33,7 +34,8 @@ public class ManageCarsPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public ManageCarsPanel(Fleet fleet) {
+    public ManageCarsPanel(javax.swing.JLabel lastUpdatedOnLabel, Fleet fleet) {
+        this.lastUpdatedOnLabel = lastUpdatedOnLabel;
         this.fleet = fleet;
         initComponents();
         disableResultsPane();
@@ -190,7 +192,7 @@ public class ManageCarsPanel extends javax.swing.JPanel {
         filterByValuePanel.setLayout(filterByValuePanelLayout);
         filterByValuePanelLayout.setHorizontalGroup(
             filterByValuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 828, Short.MAX_VALUE)
+            .addGap(0, 820, Short.MAX_VALUE)
         );
         filterByValuePanelLayout.setVerticalGroup(
             filterByValuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,15 +206,6 @@ public class ManageCarsPanel extends javax.swing.JPanel {
         filterPanelLayout.setHorizontalGroup(
             filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(filterPanelLayout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 879, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(filterPanelLayout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2)
-                .addGap(6, 6, 6))
-            .addGroup(filterPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(firstAvailableCarButton)
                 .addGap(12, 12, 12)
@@ -225,8 +218,19 @@ public class ManageCarsPanel extends javax.swing.JPanel {
                 .addComponent(showAllButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(filterPanelLayout.createSequentialGroup()
-                .addComponent(advFilterSplitPane)
+                .addComponent(advFilterSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, filterPanelLayout.createSequentialGroup()
+                .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, filterPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, filterPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator2)))
+                .addGap(6, 6, 6))
         );
         filterPanelLayout.setVerticalGroup(
             filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,10 +514,11 @@ public class ManageCarsPanel extends javax.swing.JPanel {
         DefaultTableModel tableModel = (DefaultTableModel) resultsTable.getModel();
         Object row[] = new Object[tableModel.getColumnCount()];
         
-        for(Car c : fleet.getFleet()) {
-            row[0] = c;
-            row[1] = c.getCity();
-            row[2] = c.isAvailable() ? "Yes" : "No";
+        for(String status : new String[] {"Available", "Not-Available"}) {
+            row[0] = status;
+            row[1] = status.equals("Available") ? 
+                    fleet.getAvailibityNumber() :
+                    fleet.getFleet().size() - fleet.getAvailibityNumber();
             tableModel.addRow(row);
         }
     }//GEN-LAST:event_showAvailabilityButtonActionPerformed
@@ -645,6 +650,9 @@ public class ManageCarsPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Please select a row first!");
                 return;
             }
+            
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat dfWithTime = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
         
             Car selectedCar = (Car) resultsTable.getValueAt(selectedRowIndex, 0);
             
@@ -662,7 +670,7 @@ public class ManageCarsPanel extends javax.swing.JPanel {
             selectedCar.setManufacturedYear(
                     Integer.parseInt(
                             (String) manufacturedYearElement.getSelectedItem()));
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            
             try {
                 selectedCar.setMaintenanceCertificateExpiry(
                         df.parse(certificateExpiryTextField.getText()));
@@ -673,6 +681,8 @@ public class ManageCarsPanel extends javax.swing.JPanel {
             selectedCar.setCity(cityTextField.getText());
             JOptionPane.showMessageDialog(null, "Car successfully updated!");
             hideErrorLabels();
+            resetEverything();
+            lastUpdatedOnLabel.setText(dfWithTime.format(fleet.getLastModifiedOn()));
         } else {
             JOptionPane.showMessageDialog(null, "Invalid values in the form!");
         }
@@ -681,17 +691,17 @@ public class ManageCarsPanel extends javax.swing.JPanel {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int selectedRowIndex = resultsTable.getSelectedRow();
         
-            if(selectedRowIndex < 0) {
-                JOptionPane.showMessageDialog(null, "Please select a row first!");
-                return;
-            }
-        
-            Car selectedCar = (Car) resultsTable.getValueAt(selectedRowIndex, 0);
-            fleet.deleteCar(selectedCar);
-            JOptionPane.showMessageDialog(null, "Car successfully deleted!");
-            clearFields();
-            disableResultsPane();
-            hideErrorLabels();
+        if(selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row first!");
+            return;
+        }
+        DateFormat dfWithTime = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+        Car selectedCar = (Car) resultsTable.getValueAt(selectedRowIndex, 0);
+        fleet.deleteCar(selectedCar);
+        JOptionPane.showMessageDialog(null, "Car successfully deleted!");
+        hideErrorLabels();
+        resetEverything();
+        lastUpdatedOnLabel.setText(dfWithTime.format(fleet.getLastModifiedOn()));            
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void updateTable(int type) {
@@ -717,7 +727,7 @@ public class ManageCarsPanel extends javax.swing.JPanel {
                 columnNames = new String[] {"Serial Number", "Manufacturer", "Model Number", "Total Seats", "Available Seats", "City"};
                 break;
             case 12:
-                columnNames = new String[] {"Serial Number", "City", "Availability"};
+                columnNames = new String[] {"Status", "No. Of Cars"};
                 break;    
             case 13:
                 columnNames = new String[] {"Manufacturers", "Total Cars"};
@@ -757,6 +767,15 @@ public class ManageCarsPanel extends javax.swing.JPanel {
     private void enableResultsPane() {
         for(java.awt.Component c : viewPanel.getComponents())
             c.setEnabled(true);
+    }
+    
+    private void resetEverything() {
+        clearFields();
+        disableResultsPane();
+        javax.swing.JPanel emptyPanel = new javax.swing.JPanel();
+        emptyPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        advFilterSplitPane.setRightComponent(emptyPanel);
+        showAllButton.doClick();
     }
     
     private void clearFields() {

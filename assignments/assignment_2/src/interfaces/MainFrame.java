@@ -141,17 +141,17 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
-        CreateCarPanel createCarPanel = new CreateCarPanel(fleet);
+        CreateCarPanel createCarPanel = new CreateCarPanel(lastUpdatedOnLabel, fleet);
         mainSplitPane.setRightComponent(createCarPanel);
     }//GEN-LAST:event_createButtonActionPerformed
 
     private void manageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageButtonActionPerformed
-        ManageCarsPanel manageCarPanel = new ManageCarsPanel(fleet);
+        ManageCarsPanel manageCarPanel = new ManageCarsPanel(lastUpdatedOnLabel, fleet);
         mainSplitPane.setRightComponent(manageCarPanel);
     }//GEN-LAST:event_manageButtonActionPerformed
 
     private void updateLastUpdatedOn() {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
         lastUpdatedOnLabel.setText(df.format(fleet.getLastModifiedOn()));
     }
     /**

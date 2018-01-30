@@ -26,6 +26,12 @@ public class Car {
     private String city;
     
     /**
+     * Static variable for storing car availability count
+     */
+    
+    public static Integer totalNumberOfAvailableCars = 0;
+    
+    /**
      * Constructors for this class
      */
 
@@ -54,6 +60,8 @@ public class Car {
         this.maintenanceCertificateExpiry = maintenanceCertificateExpiry;
         this.manufacturedYear = manufacturedYear;
         this.city = city;
+        if(available)
+            ++totalNumberOfAvailableCars;
     }
     
     /**
@@ -105,6 +113,10 @@ public class Car {
     }
 
     public void setAvailable(boolean available) {
+        if(!this.available && available)
+            ++totalNumberOfAvailableCars;
+        else if(this.available && !available)
+            --totalNumberOfAvailableCars;
         this.available = available;
     }
 
@@ -130,6 +142,10 @@ public class Car {
 
     public void setCity(String city) {
         this.city = city;
+    }
+    
+    public static Integer getAvailabilityCount() {
+        return totalNumberOfAvailableCars;
     }
     
     @Override
