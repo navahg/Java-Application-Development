@@ -1,0 +1,21 @@
+01/27/2018 11:00:00
+1,H123,Honda,6,0,false,10/31/2017,1900,Boston
+2,D123,Hyundai,4,0,false,10/31/2030,2012,Cambridge
+3,G123,Mercedez,4,3,true,10/31/2020,1980,Brooklyn
+4,H153,Audi,4,2,true,10/31/2020,1995,Quincy
+5,U3,Honda,4,1,true,10/31/2020,1992,Boston
+6,AU3,Honda,4,0,false,10/31/2020,1995,Boston
+7,H003,BMW,4,0,false,10/31/2020,1998,Salem
+8,JKL3,BMW,4,0,false,10/31/2020,1990,Boston
+9,OOL3,Toyota,6,4,true,10/31/2009,1963,Worcester
+10,5523,Honda,4,1,true,10/31/2015,1985,Salem
+11,IOP3,Toyota,4,2,true,10/31/2020,2005,Boston
+12,LMK3,Ferrari,2,1,true,10/31/2020,2000,Cambridge
+13,H1L,Porsche,4,3,true,10/31/2020,1996,Boston
+14,IOK3,Lamborghini,2,0,false,10/31/2020,2001,Salem
+15,MKNJ3,Ford,4,3,true,10/31/2020,1989,Quincy
+16,NJO,Ford,4,3,true,10/31/2020,1988,Worcester
+17,TY78,Volkswagon,4,2,true,10/31/2012,1967,Quincy
+18,H123,Volkswagon,4,1,true,10/31/2020,1998,Cambridge
+19,TY78,GMZ,4,0,false,10/31/2020,1998,Cambridge
+20,HJU,GMZ,6,3,true,10/31/2020,1997,Boston
