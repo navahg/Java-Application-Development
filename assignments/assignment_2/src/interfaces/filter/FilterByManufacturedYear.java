@@ -9,6 +9,7 @@ import business.Car;
 import business.Fleet;
 import java.util.Arrays;
 import java.util.TreeSet;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,6 +21,7 @@ public class FilterByManufacturedYear extends javax.swing.JPanel {
 
     private Fleet fleet;
     private JTable resultsTable;
+    private JSplitPane advFilterSplitPane;
     /**
      * Creates new form FilterByManufacturer
      */
@@ -27,9 +29,10 @@ public class FilterByManufacturedYear extends javax.swing.JPanel {
         initComponents();
     }
 
-    public FilterByManufacturedYear(Fleet fleet, JTable resultsTable) {
+    public FilterByManufacturedYear(Fleet fleet, JTable resultsTable, JSplitPane advFilterSplitPane) {
         this.fleet = fleet;
         this.resultsTable = resultsTable;
+        this.advFilterSplitPane = advFilterSplitPane;
         
         initComponents();
         populateComboBox();
@@ -46,6 +49,7 @@ public class FilterByManufacturedYear extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         yearListComboBox = new javax.swing.JComboBox<>();
+        showResultsButton = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setMaximumSize(new java.awt.Dimension(850, 130));
@@ -54,9 +58,11 @@ public class FilterByManufacturedYear extends javax.swing.JPanel {
         jLabel1.setText("Manufactured Year");
 
         yearListComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        yearListComboBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                yearListComboBoxItemStateChanged(evt);
+
+        showResultsButton.setText("Show Results");
+        showResultsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showResultsButtonActionPerformed(evt);
             }
         });
 
@@ -70,6 +76,10 @@ public class FilterByManufacturedYear extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(yearListComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(634, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(showResultsButton)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,7 +88,9 @@ public class FilterByManufacturedYear extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(yearListComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(showResultsButton)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -91,7 +103,7 @@ public class FilterByManufacturedYear extends javax.swing.JPanel {
         yearListComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(yearListString));
     }
     
-    private void yearListComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_yearListComboBoxItemStateChanged
+    private void showResultsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showResultsButtonActionPerformed
         Integer filterByYear;
         filterByYear = Integer.parseInt((String) yearListComboBox.getSelectedItem());
         
@@ -104,11 +116,12 @@ public class FilterByManufacturedYear extends javax.swing.JPanel {
             row[1] = c.getManufacturedYear();
             tableModel.addRow(row);
         }
-    }//GEN-LAST:event_yearListComboBoxItemStateChanged
+    }//GEN-LAST:event_showResultsButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton showResultsButton;
     private javax.swing.JComboBox<String> yearListComboBox;
     // End of variables declaration//GEN-END:variables
 }

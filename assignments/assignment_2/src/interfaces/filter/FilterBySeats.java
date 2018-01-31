@@ -8,6 +8,7 @@ package interfaces.filter;
 import business.Car;
 import business.Fleet;
 import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +20,7 @@ public class FilterBySeats extends javax.swing.JPanel {
 
     private Fleet fleet;
     private JTable resultsTable;
+    private JSplitPane advFilterSplitPane;
     /**
      * Creates new form FilterBySeats
      */
@@ -26,9 +28,10 @@ public class FilterBySeats extends javax.swing.JPanel {
         initComponents();
     }
 
-    public FilterBySeats(Fleet fleet, JTable resultsTable) {
+    public FilterBySeats(Fleet fleet, JTable resultsTable, JSplitPane advFilterSplitPane) {
         this.fleet = fleet;
         this.resultsTable = resultsTable;
+        this.advFilterSplitPane = advFilterSplitPane;
         
         initComponents();
     }

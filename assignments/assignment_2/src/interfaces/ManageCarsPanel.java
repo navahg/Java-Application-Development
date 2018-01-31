@@ -218,7 +218,7 @@ public class ManageCarsPanel extends javax.swing.JPanel {
                 .addComponent(showAllButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(filterPanelLayout.createSequentialGroup()
-                .addComponent(advFilterSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
+                .addComponent(advFilterSplitPane)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, filterPanelLayout.createSequentialGroup()
                 .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -572,35 +572,37 @@ public class ManageCarsPanel extends javax.swing.JPanel {
             case 0:
                 updateTable(0);
                 FilterBySerialNumberPanel filterPanel0 = 
-                        new FilterBySerialNumberPanel(fleet, resultsTable);
+                        new FilterBySerialNumberPanel(fleet, resultsTable, advFilterSplitPane);
                 advFilterSplitPane.setRightComponent(filterPanel0);
                 break;
             case 1:
                 updateTable(1);
                 FilterByModelNumberPanel filterPanel1 = 
-                        new FilterByModelNumberPanel(fleet, resultsTable);
+                        new FilterByModelNumberPanel(fleet, resultsTable, advFilterSplitPane);
                 advFilterSplitPane.setRightComponent(filterPanel1);
                 break;
             case 2:
                 updateTable(2);
                 FilterByManufacturedYear filterPanel2 = 
-                        new FilterByManufacturedYear(fleet, resultsTable);
+                        new FilterByManufacturedYear(fleet, resultsTable, advFilterSplitPane);
                 advFilterSplitPane.setRightComponent(filterPanel2);
                 break;
             case 3:
                 updateTable(3);
                 FilterBySeats filterPanel3 = 
-                        new FilterBySeats(fleet, resultsTable);
+                        new FilterBySeats(fleet, resultsTable, advFilterSplitPane);
                 advFilterSplitPane.setRightComponent(filterPanel3);
                 break;
             case 4:
                 updateTable(4);
                 FilterByCity filterPanel4 = 
-                        new FilterByCity(fleet, resultsTable);
+                        new FilterByCity(fleet, resultsTable, advFilterSplitPane);
                 advFilterSplitPane.setRightComponent(filterPanel4);
                 break;
             default:
-                advFilterSplitPane.setRightComponent(null);
+                javax.swing.JPanel emptyPanel = new javax.swing.JPanel();
+                emptyPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+                advFilterSplitPane.setRightComponent(emptyPanel);
         }
     }//GEN-LAST:event_filterListValueChanged
 

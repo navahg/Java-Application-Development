@@ -7,7 +7,10 @@ package interfaces.filter;
 
 import business.Car;
 import business.Fleet;
+import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +22,7 @@ public class FilterByModelNumberPanel extends javax.swing.JPanel {
 
     private Fleet fleet;
     private JTable resultsTable;
+    private JSplitPane advFilterSplitPane;
     /**
      * Creates new form filterByModelNumberPanel
      */
@@ -26,7 +30,8 @@ public class FilterByModelNumberPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public FilterByModelNumberPanel(Fleet fleet, JTable resultsTable) {
+    public FilterByModelNumberPanel(Fleet fleet, JTable resultsTable, JSplitPane advFilterSplitPane) {
+        this.advFilterSplitPane = advFilterSplitPane;
         this.fleet = fleet;
         this.resultsTable = resultsTable;
         
@@ -48,6 +53,7 @@ public class FilterByModelNumberPanel extends javax.swing.JPanel {
         modelNumberErrorLabel = new javax.swing.JLabel();
         showResultsButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        moreFiltersButton = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setMaximumSize(new java.awt.Dimension(850, 130));
@@ -69,6 +75,13 @@ public class FilterByModelNumberPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("*");
 
+        moreFiltersButton.setText("More Filter");
+        moreFiltersButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moreFiltersButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,16 +91,15 @@ public class FilterByModelNumberPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(modelNumberErrorLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(showResultsButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 519, Short.MAX_VALUE)
+                        .addComponent(moreFiltersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2))
-                            .addComponent(modelNumberFilterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 622, Short.MAX_VALUE)))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2))
+                    .addComponent(modelNumberFilterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(showResultsButton)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -104,7 +116,9 @@ public class FilterByModelNumberPanel extends javax.swing.JPanel {
                 .addContainerGap(37, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(showResultsButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(showResultsButton)
+                    .addComponent(moreFiltersButton))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -128,6 +142,21 @@ public class FilterByModelNumberPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_showResultsButtonActionPerformed
 
+    private void moreFiltersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moreFiltersButtonActionPerformed
+        DefaultTableModel df = (DefaultTableModel) resultsTable.getModel();
+        ArrayList<Car> resultCars = new ArrayList<>();
+        
+        for(int i = 1; i <= resultsTable.getRowCount(); i++) {
+            resultCars.add((Car)((Vector)df.getDataVector().elementAt(i)).elementAt(1));
+        }
+        
+        FilterByMultipleEntities filterPanel = 
+                new FilterByMultipleEntities(resultCars, this, 
+                        advFilterSplitPane, resultsTable);
+        
+        advFilterSplitPane.setRightComponent(filterPanel);
+    }//GEN-LAST:event_moreFiltersButtonActionPerformed
+
     private void hideErrorLables() {
         modelNumberErrorLabel.setVisible(false);
     }
@@ -147,6 +176,7 @@ public class FilterByModelNumberPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel modelNumberErrorLabel;
     private javax.swing.JTextField modelNumberFilterTextField;
+    private javax.swing.JButton moreFiltersButton;
     private javax.swing.JButton showResultsButton;
     // End of variables declaration//GEN-END:variables
 }
