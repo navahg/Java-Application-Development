@@ -6,11 +6,17 @@
 package interfaces;
 
 import business.Fleet;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,9 +29,28 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
+        File f1, f2;
+        BufferedImage image1, image2;
+        Image scaledImage1, scaledImage2;
         this.fleet = new Fleet();
         initComponents();
         updateLastUpdatedOn();
+        try {
+            f1 = new File(System.getProperty("user.dir") + 
+                                            "/resources/images/uber_homescreen.jpg");
+            f2 = new File(System.getProperty("user.dir") + 
+                                            "/resources/images/uber_logo.jpg");
+            image1 = ImageIO.read(f1);
+            image2 = ImageIO.read(f2);
+            scaledImage1 = image1.getScaledInstance(1360, 768, Image.SCALE_FAST);
+            scaledImage2 = image2.getScaledInstance(166, 166, Image.SCALE_FAST);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error rendering Picture!");
+            return;
+        }
+        
+        imageLabel.setIcon(new ImageIcon(scaledImage1));
+        iconLabel.setIcon(new ImageIcon(scaledImage2));
     }
 
     /**
@@ -43,7 +68,9 @@ public class MainFrame extends javax.swing.JFrame {
         manageButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         lastUpdatedOnLabel = new javax.swing.JLabel();
+        iconLabel = new javax.swing.JLabel();
         viewPanel = new javax.swing.JPanel();
+        imageLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 360));
@@ -91,27 +118,26 @@ public class MainFrame extends javax.swing.JFrame {
         controlPaneLayout.setHorizontalGroup(
             controlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(controlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPaneLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(controlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(manageButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lastUpdatedOnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(controlPaneLayout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(controlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(createButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(manageButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(lastUpdatedOnLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
+                .addContainerGap())
+            .addComponent(iconLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         controlPaneLayout.setVerticalGroup(
             controlPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPaneLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addComponent(iconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(manageButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 499, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 408, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lastUpdatedOnLabel)
@@ -126,11 +152,11 @@ public class MainFrame extends javax.swing.JFrame {
         viewPanel.setLayout(viewPanelLayout);
         viewPanelLayout.setHorizontalGroup(
             viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1180, Short.MAX_VALUE)
+            .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 1180, Short.MAX_VALUE)
         );
         viewPanelLayout.setVerticalGroup(
             viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 764, Short.MAX_VALUE)
+            .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
         );
 
         mainSplitPane.setRightComponent(viewPanel);
@@ -205,6 +231,8 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controlPane;
     private javax.swing.JButton createButton;
+    private javax.swing.JLabel iconLabel;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lastUpdatedOnLabel;
     private javax.swing.JSplitPane mainSplitPane;

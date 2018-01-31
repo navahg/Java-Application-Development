@@ -75,34 +75,31 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="manageButton" max="32767" attributes="0"/>
-                                  <Component id="createButton" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="lastUpdatedOnLabel" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="createButton" alignment="1" pref="0" max="32767" attributes="0"/>
+                          <Component id="manageButton" alignment="1" pref="0" max="32767" attributes="0"/>
+                          <Component id="lastUpdatedOnLabel" alignment="0" pref="142" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="iconLabel" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                      <Component id="iconLabel" min="-2" pref="162" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="createButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="manageButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="499" max="32767" attributes="0"/>
+                      <EmptySpace pref="408" max="32767" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lastUpdatedOnLabel" min="-2" max="-2" attributes="0"/>
@@ -162,6 +159,8 @@
                 <Property name="text" type="java.lang.String" value="01/01/1900 00:00:00"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="iconLabel">
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="viewPanel">
@@ -181,15 +180,19 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="1180" max="32767" attributes="0"/>
+                  <Component id="imageLabel" alignment="0" pref="1180" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="764" max="32767" attributes="0"/>
+                  <Component id="imageLabel" alignment="0" pref="764" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="imageLabel">
+            </Component>
+          </SubComponents>
         </Container>
       </SubComponents>
     </Container>
