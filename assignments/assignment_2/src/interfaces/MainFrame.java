@@ -185,6 +185,7 @@ public class MainFrame extends javax.swing.JFrame {
         MainFrame mainFrame = new MainFrame();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                mainFrame.setTitle("Uber Car Manager");
                 mainFrame.setVisible(true);
             }
         });
