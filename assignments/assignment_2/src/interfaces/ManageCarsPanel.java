@@ -636,7 +636,7 @@ public class ManageCarsPanel extends javax.swing.JPanel {
         availableSeatsSpinner.setEnabled(availabilityCheckbox.isSelected());
         availableSeatsSpinner.setValue(selectedCar.getAvailableSeats());
 
-        manufacturedYearElement.setSelectedItem(selectedCar.getManufacturedYear());
+        manufacturedYearElement.setSelectedIndex(selectedCar.getManufacturedYear() - 1900);
         certificateExpiryTextField.setText(df.format(selectedCar.getMaintenanceCertificateExpiry()));
         
         cityTextField.setText(selectedCar.getCity());
