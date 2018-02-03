@@ -171,7 +171,9 @@ public class CreateAccountPanel extends javax.swing.JPanel {
         String accountNumber = txtAccountNumber.getText();
         String bankName = txtBankName.getText();
         try {
-            Double balance = Double.parseDouble(txtBalance.getText());
+            Double.parseDouble(txtBalance.getText());
+            Integer.parseInt(routingNumber);
+            Integer.parseInt(accountNumber);
         } catch(NumberFormatException ex) {
             return false;
         }
