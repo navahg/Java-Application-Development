@@ -83,6 +83,11 @@ public class LandingPage extends javax.swing.JFrame {
         btnCustomer.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnCustomer.setText("Customer Login");
         btnCustomer.setFocusable(false);
+        btnCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCustomerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlLandingPageLayout = new javax.swing.GroupLayout(pnlLandingPage);
         pnlLandingPage.setLayout(pnlLandingPageLayout);
@@ -138,11 +143,22 @@ public class LandingPage extends javax.swing.JFrame {
      * @param evt Java ActionEvent object
      */
     private void btnAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgentActionPerformed
-        LoginPage loginPage = new LoginPage();
+        LoginPage loginPage = new LoginPage(pnlContainer, "Agent");
         pnlContainer.add("LoginPage", loginPage);
         CardLayout layout = (CardLayout) pnlContainer.getLayout();
         layout.next(pnlContainer);
     }//GEN-LAST:event_btnAgentActionPerformed
+
+    /**
+     * The callback function for Customer Login button click event
+     * @param evt Java ActionEvent object
+     */
+    private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
+        LoginPage loginPage = new LoginPage(pnlContainer, "Customer");
+        pnlContainer.add("LoginPage", loginPage);
+        CardLayout layout = (CardLayout) pnlContainer.getLayout();
+        layout.next(pnlContainer);
+    }//GEN-LAST:event_btnCustomerActionPerformed
 
     /**
      * A function to initialize all the image labels in the JFrame

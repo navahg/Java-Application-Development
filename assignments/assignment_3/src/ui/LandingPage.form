@@ -122,6 +122,9 @@
                 <Property name="text" type="java.lang.String" value="Customer Login"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCustomerActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
