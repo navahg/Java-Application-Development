@@ -18,7 +18,6 @@ package ui;
 
 import agency.AirlinesDirectory;
 import agency.CustomerDirectory;
-import agency.FlightDirectory;
 import java.awt.CardLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -30,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import agency.utils.ImageTools;
 
 /**
  * The landing page of the application. This is where the application is 
@@ -177,9 +177,9 @@ public class LandingPage extends javax.swing.JFrame {
      * A function to initialize all the image labels in the JFrame
      */
     private void initIcons() {    
-        setIcon(lblLogo, "flight-logo.png", 100, 100);
-        setIcon(btnAgent, "agent-logo.png", 50, 50);
-        setIcon(btnCustomer, "customer-logo.png", 50, 50);
+        ImageTools.setIcon(lblLogo, "flight-logo.png", 100, 100);
+        ImageTools.setIcon(btnAgent, "agent-logo.png", 50, 50);
+        ImageTools.setIcon(btnCustomer, "customer-logo.png", 50, 50);
     }
     
     /**
@@ -188,47 +188,6 @@ public class LandingPage extends javax.swing.JFrame {
     private void initMembers() {
         this.airlinesDir = new AirlinesDirectory();
         this.customerDir = new CustomerDirectory();
-    }
-    
-    /**
-     * This method sets icon for the JComponents.
-     * 
-     * @param component A JComponent for which the icon has to be set.
-     *                  <b>Should be a JButton or JLabel</b>
-     * @param filename  The filename of the icon.
-     *                  <b>Should be located in /resources/images/ directory</b>
-     * @param width     Desired width of the icon
-     * @param height    Desired height of the icon
-     */
-    private void setIcon(JComponent component, String filename, 
-                            int width, int height) {
-        if(!(component instanceof JButton) && !(component instanceof JLabel))
-            return;
-        
-        JButton _button;
-        JLabel _label;
-
-        File f;
-        BufferedImage image;
-        Image scaledImage;
-        try {
-            f = new File(System.getProperty("user.dir") + 
-                    "/resources/images/" + filename);
-            image = ImageIO.read(f);
-            scaledImage = image.getScaledInstance(width, height, 
-                    Image.SCALE_FAST);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error rendering Picture!");
-            return;
-        }
-        
-        if(component instanceof JButton){
-            _button = (JButton) component;
-            _button.setIcon(new ImageIcon(scaledImage));
-        } else {
-            _label = (JLabel) component;
-            _label.setIcon(new ImageIcon(scaledImage));
-        }
     }
     
     /**

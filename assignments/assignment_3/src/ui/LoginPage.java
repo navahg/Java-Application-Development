@@ -18,14 +18,9 @@ package ui;
 
 import agency.AirlinesDirectory;
 import agency.CustomerDirectory;
+import agency.utils.ImageTools;
 import java.awt.CardLayout;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -74,34 +69,8 @@ public class LoginPage extends javax.swing.JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(loadImage("flight-background.png", 1360, 768), 0, 0, null);
-    }
-    
-    /**
-     * The method to generate an Image object from a file.
-     * 
-     * @param filename  The filename of the icon.
-     *                  <b>Should be located in /resources/images/ directory</b>
-     * @param width     Desired width of the image
-     * @param height    Desired height of the image
-     * @return          The Image object of the desired image file
-     */
-    private Image loadImage(String filename, int width, int height) {
-        File f;
-        BufferedImage image;
-        Image scaledImage;
-        try {
-            f = new File(System.getProperty("user.dir") + 
-                    "/resources/images/" + filename);
-            image = ImageIO.read(f);
-            scaledImage = image.getScaledInstance(width, height, 
-                    Image.SCALE_FAST);
-            return scaledImage;
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error rendering Picture!");
-            return null;
-        }
-    }    
+        g.drawImage(ImageTools.loadImage("flight-background.png", 1360, 768), 0, 0, null);
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.

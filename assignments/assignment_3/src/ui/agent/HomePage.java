@@ -18,15 +18,7 @@ package ui.agent;
 
 import agency.AirlinesDirectory;
 import agency.CustomerDirectory;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import agency.utils.ImageTools;
 
 /**
  * This class renders the HomePage when an agent logs in
@@ -52,7 +44,7 @@ public class HomePage extends javax.swing.JPanel {
         this.airlinesDir = airlinesDir;
         this.customerDir = customerDir;
         initComponents();
-        setIcon(lblLogo, "flight-logo.png", 100, 100);
+        ImageTools.setIcon(lblLogo, "flight-logo.png", 100, 100);
     }
 
     /**
@@ -441,44 +433,6 @@ public class HomePage extends javax.swing.JPanel {
         btnFilter.setEnabled(chckBoxFlight.isSelected() |
                                 chckBoxAirline.isSelected());
     }//GEN-LAST:event_chckBoxFlightItemStateChanged
-
-                                       
-     /**
-     * This method sets icon for the JComponents.
-     * 
-     * @param component A JComponent for which the icon has to be set.
-     *                  <b>Should be a JButton or JLabel</b>
-     * @param filename  The filename of the icon.
-     *                  <b>Should be located in /resources/images/ directory</b>
-     * @param width     Desired width of the icon
-     * @param height    Desired height of the icon
-     */
-    private void setIcon(JComponent component, String filename, 
-                            int width, int height) {
-        if(!(component instanceof JLabel))
-            return;
-        
-        JLabel _label;
-
-        File f;
-        BufferedImage image;
-        Image scaledImage;
-        try {
-            f = new File(System.getProperty("user.dir") + 
-                    "/resources/images/" + filename);
-            image = ImageIO.read(f);
-            scaledImage = image.getScaledInstance(width, height, 
-                    Image.SCALE_FAST);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error rendering Picture!");
-            return;
-        }
-        
-        if(component instanceof JLabel){
-            _label = (JLabel) component;
-            _label.setIcon(new ImageIcon(scaledImage));
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmCreate;
