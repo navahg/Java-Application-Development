@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
+ * This class renders the HomePage when an agent logs in
  *
  * @author Raghavan Renganathan <renganathan.raghavan@gmail.com>
  */

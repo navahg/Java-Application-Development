@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
+ * This class renders the Login page
  *
  * @author Raghavan Renganathan <renganathan.raghavan@gmail.com>
  */

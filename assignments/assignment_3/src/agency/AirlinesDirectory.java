@@ -21,7 +21,7 @@ import agency.utils.Directory;
 
 /**
  * The AirlinesDirectory class holds the collection of all the airlines and
- extends the Directory class.
+ * extends the Directory class.
  * This allows it to perform various operations over the collection
  * 
  * @author  Raghavan Renganathan <renganathan.raghavan@gmail.com>
