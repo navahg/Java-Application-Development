@@ -28,9 +28,20 @@ import agency.utils.Entity;
  */
 public class Airline extends Entity {
 
+    /**
+     * Members declaration
+     */
+    private String name;
+    private FlightDirectory flights;
+    
     @Override
     public boolean identifies(String key, String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch(key) {
+            case "name":
+                return name.equals(value);
+            default:
+                return false;
+        }
     }
 
 }

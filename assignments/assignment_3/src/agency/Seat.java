@@ -20,32 +20,16 @@ package agency;
 import agency.utils.Entity;
 
 /**
- * The Customer class represents all the details of a customer.
- * 
+ *
  * @author  Raghavan Renganathan <renganathan.raghavan@gmail.com>
  * @version 1.0
- * @since   Feb 8, 2018
+ * @since   Feb 9, 2018
  */
-public class Customer extends Entity {
+public class Seat extends Entity {
 
-    /**
-     * Members declaration
-     */
-    private String name;
-    private String email;
-    private Flight flight;
-    private Seat seat;
-    
     @Override
     public boolean identifies(String key, String value) {
-        switch(key) {
-            case "name":
-                return name.equalsIgnoreCase(value);
-            case "email":
-                return email.equalsIgnoreCase(value);
-            default:
-                return false;
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

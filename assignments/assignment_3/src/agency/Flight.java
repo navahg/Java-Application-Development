@@ -28,6 +28,12 @@ import agency.utils.Entity;
  */
 public class Flight extends Entity {
 
+    /**
+     * Members declaration
+     */
+    private String model;
+    private SeatsDirectory seats;
+    
     @Override
     public boolean identifies(String key, String value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
