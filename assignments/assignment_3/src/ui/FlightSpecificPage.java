@@ -16,29 +16,18 @@
  */
 package ui;
 
-import agency.utils.ImageTools;
-import java.awt.Graphics;
-
 /**
- * This class renders the Seat Layout of the flight and the layout for the user
- * to book seats
+ * This class renders the Flight specific form
  *
  * @author Raghavan Renganathan <renganathan.raghavan@gmail.com>
  */
-public class BookFlightPage extends javax.swing.JPanel {
+public class FlightSpecificPage extends javax.swing.JPanel {
 
     /**
-     * Creates new form BookFlightPage
+     * Creates new form FlightSpecificPage
      */
-    public BookFlightPage() {
+    public FlightSpecificPage() {
         initComponents();
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(ImageTools.loadImage("seat-layout.jpg", 350, 656), 
-                        0, 0, null);
     }
 
     /**
@@ -50,7 +39,7 @@ public class BookFlightPage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setPreferredSize(new java.awt.Dimension(1360, 768));
+        setPreferredSize(new java.awt.Dimension(1360, 597));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
