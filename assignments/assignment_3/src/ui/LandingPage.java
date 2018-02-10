@@ -16,6 +16,9 @@
  */
 package ui;
 
+import agency.AirlinesDirectory;
+import agency.CustomerDirectory;
+import agency.FlightDirectory;
 import java.awt.CardLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -37,12 +40,20 @@ import javax.swing.JOptionPane;
  * @since   Feb 9, 2018
  */
 public class LandingPage extends javax.swing.JFrame {
+    
+    /**
+     * Private members which will hold the data regarding Customers, Flights,
+     * Airliners and Agents
+     */
+    private AirlinesDirectory airlinesDir;
+    private CustomerDirectory customerDir;
 
     /**
      * Creates new form LandingPage
      */
     public LandingPage() {
         initComponents();
+        initMembers();
         initIcons();
     }
 
@@ -143,7 +154,8 @@ public class LandingPage extends javax.swing.JFrame {
      * @param evt Java ActionEvent object
      */
     private void btnAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgentActionPerformed
-        LoginPage loginPage = new LoginPage(pnlContainer, "Agent");
+        LoginPage loginPage = new LoginPage(pnlContainer, "Agent", airlinesDir, 
+                                                customerDir);
         pnlContainer.add("LoginPage", loginPage);
         CardLayout layout = (CardLayout) pnlContainer.getLayout();
         layout.next(pnlContainer);
@@ -154,7 +166,8 @@ public class LandingPage extends javax.swing.JFrame {
      * @param evt Java ActionEvent object
      */
     private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
-        LoginPage loginPage = new LoginPage(pnlContainer, "Customer");
+        LoginPage loginPage = new LoginPage(pnlContainer, "Customer", 
+                                                airlinesDir, null);
         pnlContainer.add("LoginPage", loginPage);
         CardLayout layout = (CardLayout) pnlContainer.getLayout();
         layout.next(pnlContainer);
@@ -167,6 +180,14 @@ public class LandingPage extends javax.swing.JFrame {
         setIcon(lblLogo, "flight-logo.png", 100, 100);
         setIcon(btnAgent, "agent-logo.png", 50, 50);
         setIcon(btnCustomer, "customer-logo.png", 50, 50);
+    }
+    
+    /**
+     * A function to initialize all the members
+     */
+    private void initMembers() {
+        this.airlinesDir = new AirlinesDirectory();
+        this.customerDir = new CustomerDirectory();
     }
     
     /**

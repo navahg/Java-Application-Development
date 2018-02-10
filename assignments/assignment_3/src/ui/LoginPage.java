@@ -16,6 +16,8 @@
  */
 package ui;
 
+import agency.AirlinesDirectory;
+import agency.CustomerDirectory;
 import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -42,19 +44,30 @@ public class LoginPage extends javax.swing.JPanel {
      * Represents the current user's role (Agent or Customer)
      */
     private String role;
+    
+    /**
+     * Private members which will hold the data regarding Customers, Flights,
+     * Airliners and Agents
+     */
+    private AirlinesDirectory airlinesDir;
+    private CustomerDirectory customerDir;
 
     /**
      * Creates new form LoginPage
-     * @param pnlContainer The root JPanel container with Card Layout
-     */
-    public LoginPage(JPanel pnlContainer, String role) {
+     * @param pnlContainer  The root JPanel container with Card Layout
+     * @param role          The role of the user (Customer or Agent)
+     * @param airlinesDir   The Directory of airlines
+     * @param customerDir   The Directory of customers
+     */    
+    public LoginPage(JPanel pnlContainer, String role, 
+            AirlinesDirectory airlinesDir, CustomerDirectory customerDir) {
         this.pnlContainer = pnlContainer;
         this.role = role;
         initComponents();
         if("Agent".equals(role))
-            agentSpecificTasks();
+            agentSpecificTasks(airlinesDir, customerDir);
         else
-            customerSpecificTasks();
+            customerSpecificTasks(airlinesDir);
     }
 
     @Override
@@ -103,11 +116,11 @@ public class LoginPage extends javax.swing.JPanel {
         lblUsername = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         lblPassword = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         lblRegister = new javax.swing.JLabel();
         lblRegisterLink = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         btnLoginSignup = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
 
         setPreferredSize(new java.awt.Dimension(1360, 768));
 
@@ -150,39 +163,44 @@ public class LoginPage extends javax.swing.JPanel {
         btnLoginSignup.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         btnLoginSignup.setText("Login");
         btnLoginSignup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLoginSignup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginSignupActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlDetailsLayout = new javax.swing.GroupLayout(pnlDetails);
         pnlDetails.setLayout(pnlDetailsLayout);
         pnlDetailsLayout.setHorizontalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDetailsLayout.createSequentialGroup()
-                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlDetailsLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsLayout.createSequentialGroup()
+                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDetailsLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlDetailsLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblRegister)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblRegisterLink)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDetailsLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDetailsLayout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                                .addComponent(btnLoginSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15))
+                            .addComponent(txtUsername)
                             .addGroup(pnlDetailsLayout.createSequentialGroup()
                                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblPassword)
                                     .addComponent(lblUsername))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtUsername)
-                            .addComponent(txtPassword)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetailsLayout.createSequentialGroup()
-                                .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(70, 70, 70)
-                                        .addComponent(btnLoginSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnlDetailsLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(lblRegister)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblRegisterLink)))))
-                .addGap(21, 21, 21))
+                            .addComponent(jPasswordField1))))
+                .addContainerGap())
         );
         pnlDetailsLayout.setVerticalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,8 +214,8 @@ public class LoginPage extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblPassword)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRegister)
                     .addComponent(lblRegisterLink))
@@ -215,14 +233,14 @@ public class LoginPage extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(816, Short.MAX_VALUE))
+                .addContainerGap(860, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -235,18 +253,38 @@ public class LoginPage extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) pnlContainer.getLayout();
         layout.previous(pnlContainer);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    /**
+     * Handler for the click event of Login/SignUp button
+     * @param evt Java ActionEvent object
+     */
+    private void btnLoginSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginSignupActionPerformed
+        if(role == "Agent") {
+            ui.agent.HomePage homePage = new ui.agent.HomePage(airlinesDir, 
+                                                                customerDir);
+            pnlContainer.add(homePage);
+            CardLayout layout = (CardLayout) pnlContainer.getLayout();
+            layout.next(pnlContainer);
+        } else {
+            
+        }
+    }//GEN-LAST:event_btnLoginSignupActionPerformed
     
     /**
      * Method that handles tasks when a customer has landed on this page
      */
-    private void customerSpecificTasks() {
-        //TODO: Implement customer specific tasks
+    private void customerSpecificTasks(AirlinesDirectory airlinesDir) {
+        this.airlinesDir = airlinesDir;
+        this.customerDir = null;
     }
     
     /**
      * Method that handles tasks when an agent has landed on this page
      */
-    private void agentSpecificTasks() {
+    private void agentSpecificTasks(AirlinesDirectory airlinesDir, 
+            CustomerDirectory customerDir) {
+        this.customerDir = customerDir;
+        this.airlinesDir = airlinesDir;
         lblTitle.setText("Please Log In");
         lblRegister.setVisible(false);
         lblRegisterLink.setVisible(false);
@@ -255,13 +293,13 @@ public class LoginPage extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnLoginSignup;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblRegister;
     private javax.swing.JLabel lblRegisterLink;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel pnlDetails;
-    private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
