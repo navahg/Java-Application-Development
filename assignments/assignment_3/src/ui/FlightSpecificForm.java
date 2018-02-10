@@ -248,7 +248,6 @@ public class FlightSpecificForm extends javax.swing.JPanel {
     private void addToTable(Flight f) {
         DefaultTableModel dtm = (DefaultTableModel) tblFlights.getModel();
         Object[] row = new Object[7];
-        dtm.setRowCount(0);
         row[0] = f;
         row[1] = f.getModel();
         row[2] = f.getOrigin();
