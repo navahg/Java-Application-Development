@@ -55,4 +55,14 @@ public class SeatsDirectory extends Directory<Seat, String> {
         return results;
     }
 
+    @Override
+    public Seat searchIfNotCreate(String key, String value) {
+        for(Seat item : getList())
+            if(item.identifies(key, value))
+                return item;
+        Seat newInstance = create();
+        add(newInstance);
+        return newInstance;
+    }
+
 }

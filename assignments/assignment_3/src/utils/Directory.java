@@ -62,6 +62,16 @@ public abstract class Directory<E, K> {
     public abstract E search(K key, K value);
     
     /**
+     * The search method takes in a key and then returns the first found result
+     * @param   key   Represents the primary key value of item using which the 
+     *                search has to be done
+     * @param   value Represents the value that has to be matched
+     * @return        The found instance from the list of all entities,
+     *                if not returns an empty instance
+     */
+    public abstract E searchIfNotCreate(K key, K value);
+    
+    /**
      * The filter method takes in a key and then returns the first found result
      * @param   key   Represents the primary key value of item using which the 
      *                search has to be done

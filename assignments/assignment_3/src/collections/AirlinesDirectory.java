@@ -54,5 +54,15 @@ public class AirlinesDirectory extends Directory<Airline, String> {
                 });
         return results;
     }
+
+    @Override
+    public Airline searchIfNotCreate(String key, String value) {
+        for(Airline item : getList())
+            if(item.identifies(key, value))
+                return item;
+        Airline newInstance = create();
+        add(newInstance);
+        return newInstance;
+    }
         
 }

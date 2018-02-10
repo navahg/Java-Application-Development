@@ -17,6 +17,10 @@
 
 package models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TreeMap;
 import utils.Entity;
 
 /**
@@ -36,7 +40,14 @@ public class Customer extends Entity {
     private String firstName;
     private String lastName;
     private Flight flight;
-    private Seat seat;
+    private TreeMap<String, TreeMap<Flight, Seat>> bookings;
+    
+    /**
+     * TreeMap will have the Date as the key.
+     * Creating a date format parser.
+     */
+    private static final DateFormat DATE_FORMAT = 
+                                            new SimpleDateFormat("dd-mm-yyyy");
 
     /**
      * Creates an instance for a customer
@@ -45,7 +56,7 @@ public class Customer extends Entity {
         username = "n/a";
         email = "n/a";
         flight = null;
-        seat = null;
+        bookings = new TreeMap<>();
     }
     
     @Override
@@ -141,26 +152,52 @@ public class Customer extends Entity {
     }
 
     /**
-     * Gets the instance of the booked seat of the customer
-     * @return Instance of the booked seat or null
+     * Gets all the instance of the booked seat and flight of the customer
+     * @return Instances of all the booked seats and flights
      */
-    public Seat getSeat() {
-        return seat;
+    public TreeMap<String, TreeMap<Flight, Seat>> getAllBookings() {
+        return bookings;
+    }
+    
+    /**
+     * Gets the instance of the booked seat and flight of the customer
+     * @return Instance of the booked flight and seat or null
+     */
+    public TreeMap<Flight, Seat> getBookings(Date date) {
+        String key = DATE_FORMAT.format(date);
+        if(bookings.containsKey(key))
+            return bookings.get(key);
+        return null;
     }
 
     /**
      * Sets the booked seat for a customer
-     * @param seat The instance of the booked seat
+     * @param date   Date for which the flight is booked
+     * @param flight The instance of the booked flight
+     * @param seat   The instance of the booked seat
      */
-    public void setSeat(Seat seat) {
-        this.seat = seat;
+    public void setBooking(Date date, Flight flight, Seat seat) {
+        String key = DATE_FORMAT.format(date);
+        TreeMap<Flight, Seat> newBooking;
+        if(bookings.containsKey(key)) {
+            newBooking = bookings.get(key);
+            newBooking.put(flight, seat);
+        } else {
+            newBooking = new TreeMap<>();
+            bookings.put(key, newBooking);
+            newBooking.put(flight, seat);
+        }
     }
     
     /**
      * Method to cancel the booking of the customer
      */
-    public void cancelBooking() {
-        flight = null;
-        seat = null;
+    public void cancelBooking(Date date, Flight flight, Seat seat) {
+        String key = DATE_FORMAT.format(date);
+        if(bookings.containsKey(key))
+            if(bookings.get(key).containsKey(flight))
+                bookings.get(key).remove(flight, seat);
+        if(bookings.get(key).isEmpty())
+            bookings.remove(key);
     }
 }

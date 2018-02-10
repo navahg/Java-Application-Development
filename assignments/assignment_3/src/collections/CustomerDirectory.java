@@ -54,5 +54,15 @@ public class CustomerDirectory extends Directory<Customer, String> {
                 });
         return results;
     }
+
+    @Override
+    public Customer searchIfNotCreate(String key, String value) {
+        for(Customer item : getList())
+            if(item.identifies(key, value))
+                return item;
+        Customer newInstance = create();
+        add(newInstance);
+        return newInstance;
+    }
     
 }

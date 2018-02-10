@@ -55,4 +55,14 @@ public class FlightDirectory extends Directory<Flight, String> {
         return results;
     }
 
+    @Override
+    public Flight searchIfNotCreate(String key, String value) {
+        for(Flight item : getList())
+            if(item.identifies(key, value))
+                return item;
+        Flight newInstance = create();
+        add(newInstance);
+        return newInstance;
+    }
+
 }
