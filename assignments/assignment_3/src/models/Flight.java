@@ -18,6 +18,7 @@
 package models;
 
 import collections.SeatsDirectory;
+import java.util.Date;
 import utils.Entity;
 
 /**
@@ -34,10 +35,113 @@ public class Flight extends Entity {
      */
     private String model;
     private SeatsDirectory seats;
+    private String origin;
+    private String destination;
+    private Date departure;
+    private Date arrival;
+
+    /**
+     * Create an instance of Fight
+     */
+    public Flight() {
+        model = "n/a";
+        seats = new SeatsDirectory();
+        origin = "n/a";
+        destination = "n/a";
+        departure = new Date(0);
+        arrival = new Date(0);
+    }
     
     @Override
     public boolean identifies(String key, String value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Gets the model of the flight
+     * @return Model of the flight
+     */
+    public String getModel() {
+        return model;
+    }
+
+    /**
+     * Sets the model of the flight
+     * @param model Model of the flight
+     */
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    /**
+     * Gets the seats directory of the flight
+     * @return Seats directory of the flight
+     */
+    public SeatsDirectory getSeats() {
+        return seats;
+    }
+
+    /**
+     * Gets the origination of the flight
+     * @return Boarding point of the
+     */
+    public String getOrigin() {
+        return origin;
+    }
+
+    /**
+     * Sets the origination of the flight
+     * @param origin 
+     */
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    /**
+     * Gets the destination of the flight
+     * @return Destination point of the flight
+     */
+    public String getDestination() {
+        return destination;
+    }
+
+    /**
+     * sets the destination of the flight
+     * @param destination Destination point of the flight
+     */
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    /**
+     * Gets the departure time of the flight
+     * @return Departure time of the flight
+     */
+    public Date getDeparture() {
+        return departure;
+    }
+
+    /**
+     * Sets the departure time of the flight
+     * @param departure Departure time of the flight
+     */
+    public void setDeparture(Date departure) {
+        this.departure = departure;
+    }
+
+    /**
+     * Gets the arrival time of the flight
+     * @return Arrival time of the flight
+     */
+    public Date getArrival() {
+        return arrival;
+    }
+
+    /**
+     * Sets the arrival time of the flight
+     * @param arrival Arrival time of the flight
+     */
+    public void setArrival(Date arrival) {
+        this.arrival = arrival;
+    }
 }

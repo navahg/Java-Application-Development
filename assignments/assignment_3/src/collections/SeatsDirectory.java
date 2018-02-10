@@ -17,6 +17,8 @@
 
 package collections;
 
+import java.util.ArrayList;
+import models.Seat;
 import utils.Directory;
 
 /**
@@ -28,16 +30,29 @@ import utils.Directory;
  * @version 1.0
  * @since   Feb 9, 2018
  */
-public class SeatsDirectory extends Directory {
+public class SeatsDirectory extends Directory<Seat, String> {
 
     @Override
-    public Object create() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Seat create() {
+        return new Seat(null, null);
     }
 
     @Override
-    public Object search(Object key, Object value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Seat search(String key, String value) {
+        for(Seat item : getList())
+            if(item.identifies(key, value))
+                return item;
+        return null;
+    }
+    
+    @Override
+    public ArrayList<Seat> filter(String key, String value) {
+        ArrayList<Seat> results = new ArrayList<>();
+        getList().stream().filter((item) -> (item.identifies(key, value)))
+                .forEachOrdered((item) -> {
+                    results.add(item);
+                });
+        return results;
     }
 
 }

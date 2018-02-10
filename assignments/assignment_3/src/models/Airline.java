@@ -34,6 +34,24 @@ public class Airline extends Entity {
      */
     private String name;
     private FlightDirectory flights;
+
+    /**
+     * Creates an instance for Airline class
+     */
+    public Airline() {
+        name = "";
+        flights = new FlightDirectory();
+    }
+
+    /**
+     * Create an instance with the passed parameters
+     * @param name    Name of the Airline
+     * @param flights Directory of flights  
+     */
+    public Airline(String name, FlightDirectory flights) {
+        this.name = name;
+        this.flights = flights;
+    }
     
     @Override
     public boolean identifies(String key, String value) {
@@ -45,4 +63,51 @@ public class Airline extends Entity {
         }
     }
 
+    /**
+     * Getter method for {@code this.name}
+     * @return The name of the flight
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Setter method for {@code this.name}
+     * @param name The name of the flight
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Getter method for {@code this.flights}
+     * @return The directory of all flights under this current Airline
+     */
+    public FlightDirectory getFlights() {
+        return flights;
+    }
+
+    /**
+     * Setter method for {@code this.flights}
+     * @param flights The directory of flights
+     */
+    public void setFlights(FlightDirectory flights) {
+        this.flights = flights;
+    }
+    
+    /**
+     * Adds the passed <code>flight</code> to the flights directory
+     * @param flight An instance of Flight object
+     */
+    public void addFlight(Flight flight) {
+        flights.add(flight);
+    }
+    
+    /**
+     * Removes the passed <code>flight</code> to the flights directory
+     * @param flight An instance of Flight object
+     */
+    public void removeFlight(Flight flight) {
+        flights.remove(flight);
+    }
 }

@@ -17,6 +17,7 @@
 
 package collections;
 
+import java.util.ArrayList;
 import models.Flight;
 import utils.Directory;
 
@@ -38,7 +39,20 @@ public class FlightDirectory extends Directory<Flight, String> {
 
     @Override
     public Flight search(String key, String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(Flight item : getList())
+            if(item.identifies(key, value))
+                return item;
+        return null;
+    }
+    
+    @Override
+    public ArrayList<Flight> filter(String key, String value) {
+        ArrayList<Flight> results = new ArrayList<>();
+        getList().stream().filter((item) -> (item.identifies(key, value)))
+                .forEachOrdered((item) -> {
+                    results.add(item);
+                });
+        return results;
     }
 
 }

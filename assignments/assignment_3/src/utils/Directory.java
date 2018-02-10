@@ -35,12 +35,7 @@ public abstract class Directory<E, K> {
      * An ArrayList of given type that is used to store all the entities
      */
     private ArrayList<E> entityList;
-    
-    /**
-     * A counter for storing the total number of entities currently present
-     */
-    private int size;
-    
+        
     /**
      * The create method is used to create an entity, add it to the list and
      * then return the newly created instance
@@ -53,8 +48,7 @@ public abstract class Directory<E, K> {
      * @param   item Represents the entity that has to be added 
      */
     public void add(E item) {
-        if(entityList.add(item))
-            size++;
+        entityList.add(item);
     }
     
     /**
@@ -62,18 +56,28 @@ public abstract class Directory<E, K> {
      * @param   key   Represents the primary key value of item using which the 
      *                search has to be done
      * @param   value Represents the value that has to be matched
-     * @return        The found instance from the list of all entities
+     * @return        The found instance from the list of all entities,
+     *                if not null
      */
     public abstract E search(K key, K value);
     
     /**
-     * The delete method deletes the object passed as a parameter from the list
+     * The filter method takes in a key and then returns the first found result
+     * @param   key   Represents the primary key value of item using which the 
+     *                search has to be done
+     * @param   value Represents the value that has to be matched
+     * @return        The found instances from the list of all entities,
+     *                if not empty ArrayList
+     */
+    public abstract ArrayList<E> filter(K key, K value);
+    
+    /**
+     * The remove method deletes the object passed as a parameter from the list
      * of all entities
      * @param item The instance of the entity that has to be deleted
      */
-    public void delete(E item) {
+    public void remove(E item) {
         entityList.remove(item);
-        size--;
     }
     
     /**
@@ -82,5 +86,13 @@ public abstract class Directory<E, K> {
      */
     public ArrayList<E> getList() {
         return entityList;
+    }
+    
+    /**
+     * Returns the number of entities present
+     * @return Size of the ArrayList
+     */
+    public int size() {
+        return entityList.size();
     }
 }

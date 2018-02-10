@@ -17,6 +17,7 @@
 
 package collections;
 
+import java.util.ArrayList;
 import models.Customer;
 import utils.Directory;
 
@@ -33,12 +34,25 @@ public class CustomerDirectory extends Directory<Customer, String> {
 
     @Override
     public Customer create() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new Customer();
     }
 
     @Override
     public Customer search(String key, String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(Customer item : getList())
+            if(item.identifies(key, value))
+                return item;
+        return null;
     }
-
+    
+    @Override
+    public ArrayList<Customer> filter(String key, String value) {
+        ArrayList<Customer> results = new ArrayList<>();
+        getList().stream().filter((item) -> (item.identifies(key, value)))
+                .forEachOrdered((item) -> {
+                    results.add(item);
+                });
+        return results;
+    }
+    
 }

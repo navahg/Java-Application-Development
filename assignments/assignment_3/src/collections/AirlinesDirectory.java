@@ -17,6 +17,7 @@
 
 package collections;
 
+import java.util.ArrayList;
 import models.Airline;
 import utils.Directory;
 
@@ -32,13 +33,26 @@ import utils.Directory;
 public class AirlinesDirectory extends Directory<Airline, String> {
     
     @Override
+    public Airline create() {
+        return new Airline();
+    }
+    
+    @Override
     public Airline search(String key, String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(Airline item : getList())
+            if(item.identifies(key, value))
+                return item;
+        return null;
     }
 
     @Override
-    public Airline create() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Airline> filter(String key, String value) {
+        ArrayList<Airline> results = new ArrayList<>();
+        getList().stream().filter((item) -> (item.identifies(key, value)))
+                .forEachOrdered((item) -> {
+                    results.add(item);
+                });
+        return results;
     }
-    
+        
 }
