@@ -20,7 +20,7 @@ package agency;
 import agency.utils.Directory;
 
 /**
- * The AirlinerDirectory class holds the collection of all the airlines and
+ * The AirlinesDirectory class holds the collection of all the airlines and
  extends the Directory class.
  * This allows it to perform various operations over the collection
  * 
@@ -28,7 +28,7 @@ import agency.utils.Directory;
  * @version 1.0
  * @since   Feb 7, 2018
  */
-public class AirlinerDirectory extends Directory<Airline, String> {
+public class AirlinesDirectory extends Directory<Airline, String> {
     
     @Override
     public Airline search(String key, String value) {
