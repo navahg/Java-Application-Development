@@ -169,9 +169,9 @@ public class Flight extends Entity {
      */
     public void setDeparture(String departure) {
         try {
-            this.arrival = DATE_FORMAT.parse(departure);
+            this.departure = DATE_FORMAT.parse(departure);
         } catch (ParseException ex) {
-            this.arrival = new Date();
+            this.departure = new Date();
         }
     }
 
