@@ -32,6 +32,10 @@ import utils.Directory;
  */
 public class SeatsDirectory extends Directory<Seat, String> {
 
+    public SeatsDirectory() {
+        initialize();
+    }
+    
     @Override
     public Seat create() {
         return new Seat(null, null);

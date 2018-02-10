@@ -18,6 +18,11 @@ package ui.agent;
 
 import collections.AirlinesDirectory;
 import collections.CustomerDirectory;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import models.Airline;
+import ui.AirlineSpecificForm;
 import utils.ImageTools;
 
 /**
@@ -33,6 +38,7 @@ public class HomePage extends javax.swing.JPanel {
      */
     private AirlinesDirectory airlinesDir;
     private CustomerDirectory customerDir;
+    private JPanel pnlContainer;
     
     /**
      * Creates new form HomePage
@@ -40,10 +46,12 @@ public class HomePage extends javax.swing.JPanel {
      * @param customerDir The Directory of customers
      */
     public HomePage(AirlinesDirectory airlinesDir, 
-                        CustomerDirectory customerDir) {
+                        CustomerDirectory customerDir, JPanel pnlContainer) {
         this.airlinesDir = airlinesDir;
         this.customerDir = customerDir;
+        this.pnlContainer = pnlContainer;
         initComponents();
+        populateTable();
         ImageTools.setIcon(lblLogo, "flight-logo.png", 100, 100);
     }
 
@@ -104,6 +112,11 @@ public class HomePage extends javax.swing.JPanel {
 
         btnLogout.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnLogout.setText("Log Out");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlTitleLayout = new javax.swing.GroupLayout(pnlTitle);
         pnlTitle.setLayout(pnlTitleLayout);
@@ -139,13 +152,10 @@ public class HomePage extends javax.swing.JPanel {
 
         tblAirlines.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Name", "Total Number Of Flights"
             }
         ));
         scrollTblCntr.setViewportView(tblAirlines);
@@ -153,6 +163,11 @@ public class HomePage extends javax.swing.JPanel {
         btnView.setText("View");
 
         btmCreate.setText("Create");
+        btmCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btmCreateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlInnerManageLayout = new javax.swing.GroupLayout(pnlInnerManage);
         pnlInnerManage.setLayout(pnlInnerManageLayout);
@@ -434,6 +449,46 @@ public class HomePage extends javax.swing.JPanel {
                                 chckBoxAirline.isSelected());
     }//GEN-LAST:event_chckBoxFlightItemStateChanged
 
+    /**
+     * Handler for Logout button click event
+     * @param evt Java ActionEvent object
+     */
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        pnlContainer.remove(this);
+        CardLayout layout = (CardLayout) pnlContainer.getLayout();
+        layout.previous(pnlContainer);
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    /**
+     * Handler for Create button click event
+     * @param evt Java ActionEvent object
+     */
+    private void btmCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmCreateActionPerformed
+        AirlineSpecificForm createAirlineForm = 
+                new AirlineSpecificForm(pnlManage, airlinesDir);
+        pnlManage.add(createAirlineForm);
+        CardLayout layout = (CardLayout) pnlManage.getLayout();
+        layout.next(pnlManage);
+    }//GEN-LAST:event_btmCreateActionPerformed
+
+    /**
+     * Method that populates the table records
+     */
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblAirlines.getModel();
+        Object[] row = new Object[2];
+        dtm.setRowCount(0);
+        
+        if(airlinesDir.isEmpty())
+            return;
+        
+        for(Airline item : airlinesDir.getList()) {
+            row[0] = item;
+            row[1] = airlinesDir.size();
+            dtm.addRow(row);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmCreate;
     private javax.swing.JButton btnBook;

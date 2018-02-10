@@ -61,6 +61,11 @@ public class Seat extends Entity {
     public boolean identifies(String row, String column) {
         return (this.row.equals(row) && this.column.equals(column));
     }
+    
+    @Override
+    public String toString() {
+        return column + row;
+    }
 
     /**
      * Book this seat for the given date and given customer.

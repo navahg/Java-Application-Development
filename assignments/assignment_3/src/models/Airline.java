@@ -62,6 +62,11 @@ public class Airline extends Entity {
                 return false;
         }
     }
+    
+    @Override
+    public String toString() {
+        return name;
+    }
 
     /**
      * Getter method for {@code this.name}

@@ -35,6 +35,13 @@ public abstract class Directory<E, K> {
      * An ArrayList of given type that is used to store all the entities
      */
     private ArrayList<E> entityList;
+    
+    /**
+     * Initializes the ArrayList
+     */
+    protected void initialize() {
+        entityList = new ArrayList<>();
+    }
         
     /**
      * The create method is used to create an entity, add it to the list and
@@ -104,5 +111,13 @@ public abstract class Directory<E, K> {
      */
     public int size() {
         return entityList.size();
+    }
+    
+    /**
+     * Checks if the list is empty
+     * @return true if the list is empty, else false
+     */
+    public boolean isEmpty() {
+        return entityList.isEmpty();
     }
 }

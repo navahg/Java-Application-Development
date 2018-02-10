@@ -32,6 +32,10 @@ import utils.Directory;
  */
 public class CustomerDirectory extends Directory<Customer, String> {
 
+    public CustomerDirectory() {
+        initialize();
+    }
+    
     @Override
     public Customer create() {
         return new Customer();

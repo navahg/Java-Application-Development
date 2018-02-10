@@ -18,6 +18,9 @@
 package models;
 
 import collections.SeatsDirectory;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import utils.Entity;
 
@@ -33,17 +36,24 @@ public class Flight extends Entity {
     /**
      * Members declaration
      */
+    private String name;
     private String model;
     private SeatsDirectory seats;
     private String origin;
     private String destination;
     private Date departure;
     private Date arrival;
+    
+    /**
+     * DateFormat
+     */
+    private final DateFormat DATE_FORMAT = new SimpleDateFormat("hh:mm a");
 
     /**
      * Create an instance of Fight
      */
     public Flight() {
+        name = "n/a";
         model = "n/a";
         seats = new SeatsDirectory();
         origin = "n/a";
@@ -54,9 +64,41 @@ public class Flight extends Entity {
     
     @Override
     public boolean identifies(String key, String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch(key) {
+            case "name":
+                return name.equals(value);
+            case "model":
+                return model.equals(value);
+            case "origin":
+                return origin.equals(value);
+            case "destination":
+                return destination.equals(value);
+            default:
+                return false;
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return name;
     }
 
+    /**
+     * Gets the name of the flight
+     * @return Name of the flight
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the name of the flight
+     * @param name Name of the flight
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     /**
      * Gets the model of the flight
      * @return Model of the flight
@@ -117,31 +159,47 @@ public class Flight extends Entity {
      * Gets the departure time of the flight
      * @return Departure time of the flight
      */
-    public Date getDeparture() {
-        return departure;
+    public String getDeparture() {
+        return DATE_FORMAT.format(departure);
     }
 
     /**
      * Sets the departure time of the flight
      * @param departure Departure time of the flight
      */
-    public void setDeparture(Date departure) {
-        this.departure = departure;
+    public void setDeparture(String departure) {
+        try {
+            this.arrival = DATE_FORMAT.parse(departure);
+        } catch (ParseException ex) {
+            this.arrival = new Date();
+        }
     }
 
     /**
      * Gets the arrival time of the flight
      * @return Arrival time of the flight
      */
-    public Date getArrival() {
-        return arrival;
+    public String getArrival() {
+        return DATE_FORMAT.format(arrival);
     }
 
     /**
      * Sets the arrival time of the flight
      * @param arrival Arrival time of the flight
      */
-    public void setArrival(Date arrival) {
-        this.arrival = arrival;
+    public void setArrival(String arrival) {
+        try {
+            this.arrival = DATE_FORMAT.parse(arrival);
+        } catch (ParseException ex) {
+            this.arrival = new Date();
+        }
+    }
+    
+    /**
+     * Returns the total number of seats
+     * @return size of the seats ArrayList
+     */
+    public int getTotalSeats() {
+        return seats.size();
     }
 }

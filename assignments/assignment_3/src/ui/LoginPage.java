@@ -248,7 +248,7 @@ public class LoginPage extends javax.swing.JPanel {
                 return;
             }
             ui.agent.HomePage homePage = new ui.agent.HomePage(airlinesDir, 
-                                                                customerDir);
+                                                customerDir, pnlContainer);
             pnlContainer.add(homePage);
             CardLayout layout = (CardLayout) pnlContainer.getLayout();
             layout.next(pnlContainer);
@@ -261,7 +261,7 @@ public class LoginPage extends javax.swing.JPanel {
                 return;
             }
             ui.agent.HomePage homePage = new ui.agent.HomePage(airlinesDir, 
-                                                                customerDir);
+                                                customerDir, pnlContainer);
             pnlContainer.add(homePage);
             CardLayout layout = (CardLayout) pnlContainer.getLayout();
             layout.next(pnlContainer);

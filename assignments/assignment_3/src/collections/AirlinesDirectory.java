@@ -32,6 +32,10 @@ import utils.Directory;
  */
 public class AirlinesDirectory extends Directory<Airline, String> {
     
+    public AirlinesDirectory() {
+        initialize();
+    }
+    
     @Override
     public Airline create() {
         return new Airline();

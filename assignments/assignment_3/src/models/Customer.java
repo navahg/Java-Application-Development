@@ -70,6 +70,11 @@ public class Customer extends Entity {
                 return false;
         }
     }
+    
+    @Override
+    public String toString() {
+        return lastName + ", " + firstName;
+    }
 
     /**
      * A getter method for getting the username of the customer
