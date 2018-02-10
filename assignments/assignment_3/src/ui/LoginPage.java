@@ -21,7 +21,10 @@ import collections.CustomerDirectory;
 import utils.ImageTools;
 import java.awt.CardLayout;
 import java.awt.Graphics;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import models.Customer;
+import services.LoginService;
 
 /**
  * This class renders the Login page
@@ -63,7 +66,7 @@ public class LoginPage extends javax.swing.JPanel {
         if("Agent".equals(role))
             agentSpecificTasks(airlinesDir, customerDir);
         else
-            customerSpecificTasks(airlinesDir);
+            customerSpecificTasks(airlinesDir, customerDir);
     }
 
     @Override
@@ -90,7 +93,7 @@ public class LoginPage extends javax.swing.JPanel {
         lblRegisterLink = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         btnLoginSignup = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtPassword = new javax.swing.JPasswordField();
 
         setPreferredSize(new java.awt.Dimension(1360, 768));
 
@@ -169,7 +172,7 @@ public class LoginPage extends javax.swing.JPanel {
                                     .addComponent(lblPassword)
                                     .addComponent(lblUsername))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jPasswordField1))))
+                            .addComponent(txtPassword))))
                 .addContainerGap())
         );
         pnlDetailsLayout.setVerticalGroup(
@@ -184,7 +187,7 @@ public class LoginPage extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblPassword)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRegister)
@@ -229,23 +232,49 @@ public class LoginPage extends javax.swing.JPanel {
      * @param evt Java ActionEvent object
      */
     private void btnLoginSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginSignupActionPerformed
+        String username = txtUsername.getText();
+        String password = new String(txtPassword.getPassword());
+        
+        if(username.equals("") || password.equals("")) {
+            JOptionPane.showMessageDialog(null,
+                    "Please provide username and password");
+            return;
+        }
+        
         if(role == "Agent") {
+            if(!LoginService.doAgentLogin(username, password)) {
+                JOptionPane.showMessageDialog(null,
+                    "Incorrect username or password!");
+                return;
+            }
             ui.agent.HomePage homePage = new ui.agent.HomePage(airlinesDir, 
                                                                 customerDir);
             pnlContainer.add(homePage);
             CardLayout layout = (CardLayout) pnlContainer.getLayout();
             layout.next(pnlContainer);
         } else {
-            
+            Customer curr = 
+                    LoginService.doCustLogin(username, password, customerDir);
+            if(curr == null) {
+                JOptionPane.showMessageDialog(null,
+                    "Incorrect username or password!");
+                return;
+            }
+            ui.agent.HomePage homePage = new ui.agent.HomePage(airlinesDir, 
+                                                                customerDir);
+            pnlContainer.add(homePage);
+            CardLayout layout = (CardLayout) pnlContainer.getLayout();
+            layout.next(pnlContainer);
         }
     }//GEN-LAST:event_btnLoginSignupActionPerformed
     
     /**
      * Method that handles tasks when a customer has landed on this page
      */
-    private void customerSpecificTasks(AirlinesDirectory airlinesDir) {
+    private void customerSpecificTasks(AirlinesDirectory airlinesDir, 
+            CustomerDirectory customerDir) {
         this.airlinesDir = airlinesDir;
-        this.customerDir = null;
+        this.customerDir = customerDir;
     }
     
     /**
@@ -263,13 +292,13 @@ public class LoginPage extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnLoginSignup;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblRegister;
     private javax.swing.JLabel lblRegisterLink;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel pnlDetails;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

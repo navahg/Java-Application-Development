@@ -157,7 +157,7 @@ public class LandingPage extends javax.swing.JFrame {
      */
     private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
         LoginPage loginPage = new LoginPage(pnlContainer, "Customer", 
-                                                airlinesDir, null);
+                                                airlinesDir, customerDir);
         pnlContainer.add("LoginPage", loginPage);
         CardLayout layout = (CardLayout) pnlContainer.getLayout();
         layout.next(pnlContainer);
