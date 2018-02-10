@@ -15,37 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package agency;
+package collections;
 
-import agency.utils.Entity;
+import models.Flight;
+import utils.Directory;
 
 /**
- * The Customer class represents all the details of a customer.
+ * The FlightDirectory class holds the collection of all the flights and
+ extends the Directory class.
+ * This allows it to perform various operations over the collection
  * 
  * @author  Raghavan Renganathan <renganathan.raghavan@gmail.com>
  * @version 1.0
- * @since   Feb 8, 2018
+ * @since   Feb 7, 2018
  */
-public class Customer extends Entity {
+public class FlightDirectory extends Directory<Flight, String> {
 
-    /**
-     * Members declaration
-     */
-    private String name;
-    private String email;
-    private Flight flight;
-    private Seat seat;
-    
     @Override
-    public boolean identifies(String key, String value) {
-        switch(key) {
-            case "name":
-                return name.equalsIgnoreCase(value);
-            case "email":
-                return email.equalsIgnoreCase(value);
-            default:
-                return false;
-        }
+    public Flight create() {
+        return new Flight();
+    }
+
+    @Override
+    public Flight search(String key, String value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

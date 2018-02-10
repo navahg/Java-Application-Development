@@ -15,30 +15,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package agency;
+package models;
 
-import agency.utils.Entity;
+import utils.Entity;
 
 /**
- * The Airline class represents all the features of an airline.
+ * The Customer class represents all the details of a customer.
  * 
  * @author  Raghavan Renganathan <renganathan.raghavan@gmail.com>
  * @version 1.0
- * @since   Feb 7, 2018
+ * @since   Feb 8, 2018
  */
-public class Airline extends Entity {
+public class Customer extends Entity {
 
     /**
      * Members declaration
      */
     private String name;
-    private FlightDirectory flights;
+    private String email;
+    private Flight flight;
+    private Seat seat;
     
     @Override
     public boolean identifies(String key, String value) {
         switch(key) {
             case "name":
-                return name.equals(value);
+                return name.equalsIgnoreCase(value);
+            case "email":
+                return email.equalsIgnoreCase(value);
             default:
                 return false;
         }

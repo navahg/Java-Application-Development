@@ -1,4 +1,4 @@
-    /*
+/*
  * Copyright (C) 2018 Raghavan Renganathan <renganathan.raghavan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,28 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package agency;
+package collections;
 
-import agency.utils.Directory;
+import utils.Directory;
 
 /**
- * The Customer Directory class holds the collection of all the customers and
+ * The SeatsDirectory class holds the collection of all the seats and
  * extends the Directory class.
  * This allows it to perform various operations over the collection
  * 
  * @author  Raghavan Renganathan <renganathan.raghavan@gmail.com>
  * @version 1.0
- * @since   Feb 8, 2018
+ * @since   Feb 9, 2018
  */
-public class CustomerDirectory extends Directory<Customer, String> {
+public class SeatsDirectory extends Directory {
 
     @Override
-    public Customer create() {
+    public Object create() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Customer search(String key, String value) {
+    public Object search(Object key, Object value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

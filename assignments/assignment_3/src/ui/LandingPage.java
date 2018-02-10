@@ -16,8 +16,8 @@
  */
 package ui;
 
-import agency.AirlinesDirectory;
-import agency.CustomerDirectory;
+import collections.AirlinesDirectory;
+import collections.CustomerDirectory;
 import java.awt.CardLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -29,7 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import agency.utils.ImageTools;
+import utils.ImageTools;
 
 /**
  * The landing page of the application. This is where the application is 

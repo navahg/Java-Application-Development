@@ -15,21 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package agency;
+package collections;
 
-import agency.utils.Entity;
+import models.Airline;
+import utils.Directory;
 
 /**
- *
+ * The AirlinesDirectory class holds the collection of all the airlines and
+ * extends the Directory class.
+ * This allows it to perform various operations over the collection
+ * 
  * @author  Raghavan Renganathan <renganathan.raghavan@gmail.com>
  * @version 1.0
- * @since   Feb 9, 2018
+ * @since   Feb 7, 2018
  */
-public class Seat extends Entity {
-
+public class AirlinesDirectory extends Directory<Airline, String> {
+    
     @Override
-    public boolean identifies(String key, String value) {
+    public Airline search(String key, String value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Airline create() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

@@ -15,28 +15,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package agency;
+package models;
 
-import agency.utils.Entity;
+import collections.FlightDirectory;
+import utils.Entity;
 
 /**
- * The Flight class represents all the features of a flight.
- *
+ * The Airline class represents all the features of an airline.
+ * 
  * @author  Raghavan Renganathan <renganathan.raghavan@gmail.com>
  * @version 1.0
  * @since   Feb 7, 2018
  */
-public class Flight extends Entity {
+public class Airline extends Entity {
 
     /**
      * Members declaration
      */
-    private String model;
-    private SeatsDirectory seats;
+    private String name;
+    private FlightDirectory flights;
     
     @Override
     public boolean identifies(String key, String value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch(key) {
+            case "name":
+                return name.equals(value);
+            default:
+                return false;
+        }
     }
 
 }

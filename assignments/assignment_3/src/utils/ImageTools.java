@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package agency.utils;
+package utils;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;

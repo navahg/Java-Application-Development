@@ -16,7 +16,7 @@
  */
 package ui;
 
-import agency.utils.ImageTools;
+import utils.ImageTools;
 import java.awt.Graphics;
 
 /**

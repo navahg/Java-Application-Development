@@ -15,28 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package agency;
+package models;
 
-import agency.utils.Directory;
+import collections.SeatsDirectory;
+import utils.Entity;
 
 /**
- * The FlightDirectory class holds the collection of all the flights and
- extends the Directory class.
- * This allows it to perform various operations over the collection
- * 
+ * The Flight class represents all the features of a flight.
+ *
  * @author  Raghavan Renganathan <renganathan.raghavan@gmail.com>
  * @version 1.0
  * @since   Feb 7, 2018
  */
-public class FlightDirectory extends Directory<Flight, String> {
+public class Flight extends Entity {
 
+    /**
+     * Members declaration
+     */
+    private String model;
+    private SeatsDirectory seats;
+    
     @Override
-    public Flight create() {
-        return new Flight();
-    }
-
-    @Override
-    public Flight search(String key, String value) {
+    public boolean identifies(String key, String value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

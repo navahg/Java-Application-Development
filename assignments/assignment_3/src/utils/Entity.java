@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package agency.utils;
+package utils;
 
 /**
  * The Entity abstract class will be used to act as a base class for any 

@@ -16,9 +16,9 @@
  */
 package ui.agent;
 
-import agency.AirlinesDirectory;
-import agency.CustomerDirectory;
-import agency.utils.ImageTools;
+import collections.AirlinesDirectory;
+import collections.CustomerDirectory;
+import utils.ImageTools;
 
 /**
  * This class renders the HomePage when an agent logs in

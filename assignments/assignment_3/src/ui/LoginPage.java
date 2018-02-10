@@ -16,9 +16,9 @@
  */
 package ui;
 
-import agency.AirlinesDirectory;
-import agency.CustomerDirectory;
-import agency.utils.ImageTools;
+import collections.AirlinesDirectory;
+import collections.CustomerDirectory;
+import utils.ImageTools;
 import java.awt.CardLayout;
 import java.awt.Graphics;
 import javax.swing.JPanel;
