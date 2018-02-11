@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import models.Airline;
 import models.Flight;
+import ui.agent.HomePage;
 
 /**
  * This class renders the create/edit Airlines page
@@ -191,7 +192,7 @@ public class AirlineSpecificForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnAddFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFlightActionPerformed
-        temp = airlinesDir.create();
+        temp = temp == null ? airlinesDir.create() : temp;
         FlightSpecificForm createFlightForm = 
                            new FlightSpecificForm(pnlManage, tblFlights, 
                                                              temp.getFlights());
@@ -216,6 +217,7 @@ public class AirlineSpecificForm extends javax.swing.JPanel {
      */
     public void closeThis() {
         pnlManage.remove(this);
+        ((HomePage) pnlManage.getParent().getParent()).populateTable();        
         CardLayout layout = (CardLayout) pnlManage.getLayout();
         layout.previous(pnlManage);
     }

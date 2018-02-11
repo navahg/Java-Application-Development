@@ -19,10 +19,13 @@ package ui.agent;
 import collections.AirlinesDirectory;
 import collections.CustomerDirectory;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import models.Airline;
+import models.Flight;
 import ui.AirlineSpecificForm;
+import ui.AirlineSpecificPage;
 import utils.ImageTools;
 
 /**
@@ -36,14 +39,15 @@ public class HomePage extends javax.swing.JPanel {
      * Private members which will hold the data regarding Customers, Flights,
      * Airliners and Agents
      */
-    private AirlinesDirectory airlinesDir;
-    private CustomerDirectory customerDir;
-    private JPanel pnlContainer;
+    private final AirlinesDirectory airlinesDir;
+    private final CustomerDirectory customerDir;
+    private final JPanel pnlContainer;
     
     /**
      * Creates new form HomePage
-     * @param airlinesDir The Directory of airlines
-     * @param customerDir The Directory of customers
+     * @param airlinesDir  The Directory of airlines
+     * @param customerDir  The Directory of customers
+     * @param pnlContainer The Parent container with card layout
      */
     public HomePage(AirlinesDirectory airlinesDir, 
                         CustomerDirectory customerDir, JPanel pnlContainer) {
@@ -161,6 +165,11 @@ public class HomePage extends javax.swing.JPanel {
         scrollTblCntr.setViewportView(tblAirlines);
 
         btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
 
         btmCreate.setText("Create");
         btmCreate.addActionListener(new java.awt.event.ActionListener() {
@@ -471,10 +480,26 @@ public class HomePage extends javax.swing.JPanel {
         layout.next(pnlManage);
     }//GEN-LAST:event_btmCreateActionPerformed
 
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        int selectedRowIndex = tblAirlines.getSelectedRow();
+        
+        if(selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row first!");
+            return;
+        }
+        Airline airline = (Airline) tblAirlines.getValueAt(selectedRowIndex, 0);
+        
+        AirlineSpecificPage viewAirlinePage = 
+                new AirlineSpecificPage(pnlManage, airline, airlinesDir);
+        pnlManage.add(viewAirlinePage);
+        CardLayout layout = (CardLayout) pnlManage.getLayout();
+        layout.next(pnlManage);
+    }//GEN-LAST:event_btnViewActionPerformed
+
     /**
      * Method that populates the table records
      */
-    private void populateTable() {
+    public void populateTable() {
         DefaultTableModel dtm = (DefaultTableModel) tblAirlines.getModel();
         Object[] row = new Object[2];
         dtm.setRowCount(0);
@@ -484,7 +509,7 @@ public class HomePage extends javax.swing.JPanel {
         
         for(Airline item : airlinesDir.getList()) {
             row[0] = item;
-            row[1] = airlinesDir.size();
+            row[1] = item.getFlights().size();
             dtm.addRow(row);
         }
     }
