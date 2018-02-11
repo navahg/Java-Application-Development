@@ -18,6 +18,7 @@
 package collections;
 
 import java.util.ArrayList;
+import java.util.Date;
 import models.Seat;
 import utils.Directory;
 
@@ -69,4 +70,17 @@ public class SeatsDirectory extends Directory<Seat, String> {
         return newInstance;
     }
 
+    /**
+     * Returns the available instance of seats
+     * @param date Day for which the checking has be done
+     * @return Available seats
+     */
+    public ArrayList<Seat> getAvailableSeats(Date date) {
+        ArrayList<Seat> results = new ArrayList<>();
+        getList().stream().filter((s) -> (!s.isBooked(date)))
+                .forEachOrdered((s) -> {
+                    results.add(s);
+                });
+        return results;
+    }
 }

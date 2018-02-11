@@ -19,6 +19,11 @@ package ui.agent;
 import collections.AirlinesDirectory;
 import collections.CustomerDirectory;
 import java.awt.CardLayout;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +47,11 @@ public class HomePage extends javax.swing.JPanel {
     private final AirlinesDirectory airlinesDir;
     private final CustomerDirectory customerDir;
     private final JPanel pnlContainer;
+    
+    /**
+     * Date Formatter
+     */
+    private final DateFormat DATE_FORMAT = new SimpleDateFormat("mm/dd/yyyy");
     
     /**
      * Creates new form HomePage
@@ -91,17 +101,7 @@ public class HomePage extends javax.swing.JPanel {
         txtTo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtStartDate = new javax.swing.JTextField();
-        txtReturnDate = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        radioSingle = new javax.swing.JRadioButton();
-        radioRoundTrip = new javax.swing.JRadioButton();
         btnSearch = new javax.swing.JButton();
-        btnListAll = new javax.swing.JButton();
-        txtAirlineFilter = new javax.swing.JTextField();
-        txtFlightFilter = new javax.swing.JTextField();
-        chckBoxAirline = new javax.swing.JCheckBox();
-        chckBoxFlight = new javax.swing.JCheckBox();
-        btnFilter = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFilteredResults = new javax.swing.JTable();
         btnBook = new javax.swing.JButton();
@@ -233,66 +233,30 @@ public class HomePage extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         jLabel3.setText("Start Date");
 
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        jLabel4.setText("Return Date");
-
-        btnGrpTripType.add(radioSingle);
-        radioSingle.setText("One Way");
-        radioSingle.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                radioSingleItemStateChanged(evt);
-            }
-        });
-
-        btnGrpTripType.add(radioRoundTrip);
-        radioRoundTrip.setText("Round Trip");
-        radioRoundTrip.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                radioRoundTripItemStateChanged(evt);
-            }
-        });
-
         btnSearch.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnSearch.setText("Search Flights");
-
-        btnListAll.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        btnListAll.setText("List All Flights");
-
-        txtAirlineFilter.setEnabled(false);
-
-        txtFlightFilter.setEnabled(false);
-
-        chckBoxAirline.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        chckBoxAirline.setText("Airline");
-        chckBoxAirline.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chckBoxAirlineItemStateChanged(evt);
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
             }
         });
-
-        chckBoxFlight.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        chckBoxFlight.setText("Flight");
-        chckBoxFlight.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chckBoxFlightItemStateChanged(evt);
-            }
-        });
-
-        btnFilter.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        btnFilter.setText("Filter Results");
-        btnFilter.setEnabled(false);
 
         tblFilteredResults.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Airliner", "Flight", "Departure", "Arrival", "Available Seats"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblFilteredResults);
 
         btnBook.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -310,18 +274,7 @@ public class HomePage extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(sepFirst1))
                     .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                        .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                                .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtAirlineFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(chckBoxAirline))
-                                .addGap(18, 18, 18)
-                                .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(chckBoxFlight)
-                                    .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                                        .addComponent(txtFlightFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnFilter))))
+                        .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlInnerSearchLayout.createSequentialGroup()
                                 .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -333,22 +286,14 @@ public class HomePage extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)
-                                    .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                                        .addComponent(radioRoundTrip)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(radioSingle)))
-                                .addGap(18, 18, 18)
-                                .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtReturnDate, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addGap(84, 84, 84)
-                                .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnListAll, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                        .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addGap(33, 33, 33)
+                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 473, Short.MAX_VALUE))
+                            .addGroup(pnlInnerSearchLayout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1088, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(43, 43, 43))))
         );
         pnlInnerSearchLayout.setVerticalGroup(
@@ -358,51 +303,26 @@ public class HomePage extends javax.swing.JPanel {
                 .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(sepFirst1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSubtitle1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                        .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                                .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtReturnDate, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(radioSingle)
-                            .addComponent(radioRoundTrip)))
-                    .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnListAll, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(chckBoxAirline)
-                    .addComponent(chckBoxFlight))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtAirlineFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtFlightFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnFilter)))
+                    .addGroup(pnlInnerSearchLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlInnerSearchLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlInnerSearchLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                        .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 304, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(30, 30, 30))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         pnlSearch.add(pnlInnerSearch, "card3");
@@ -424,39 +344,6 @@ public class HomePage extends javax.swing.JPanel {
                 .addComponent(tabPnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void radioRoundTripItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radioRoundTripItemStateChanged
-
-    }//GEN-LAST:event_radioRoundTripItemStateChanged
-
-    /**
-     * Handler for State Change event for Trip Type Radio Button
-     * @param evt Java ActionEvent object
-     */
-    private void radioSingleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radioSingleItemStateChanged
-        txtReturnDate.setText("");
-        txtReturnDate.setEnabled(false);
-    }//GEN-LAST:event_radioSingleItemStateChanged
-
-    /**
-     * Handler for State Change event for Airline Filter
-     * @param evt Java ActionEvent object
-     */
-    private void chckBoxAirlineItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chckBoxAirlineItemStateChanged
-        txtAirlineFilter.setEnabled(chckBoxAirline.isSelected());
-        btnFilter.setEnabled(chckBoxAirline.isSelected() | 
-                                chckBoxFlight.isSelected());
-    }//GEN-LAST:event_chckBoxAirlineItemStateChanged
-
-    /**
-     * Handler for State Change event for Flight Filter
-     * @param evt Java ActionEvent object
-     */
-    private void chckBoxFlightItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chckBoxFlightItemStateChanged
-        txtFlightFilter.setEnabled(chckBoxFlight.isSelected());
-        btnFilter.setEnabled(chckBoxFlight.isSelected() |
-                                chckBoxAirline.isSelected());
-    }//GEN-LAST:event_chckBoxFlightItemStateChanged
 
     /**
      * Handler for Logout button click event
@@ -496,6 +383,39 @@ public class HomePage extends javax.swing.JPanel {
         layout.next(pnlManage);
     }//GEN-LAST:event_btnViewActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String from = txtFrom.getText();
+        String to = txtTo.getText();
+
+        if ("".equals(from) || "".equals(to)) {
+            JOptionPane.showMessageDialog(null, "From and To should be given!");
+            return;
+        }
+
+        Date date;
+        try {
+            date = DATE_FORMAT.parse(txtStartDate.getText());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Not a valid date!");
+            date = new Date();
+        }
+
+        ArrayList<Flight> flights;
+        Object[] row = new Object[5];
+        clearFilterTable();
+        for(Airline a : airlinesDir.getList()) {
+            flights = a.getFlights().getConnectingFlights(from, to);
+            for(Flight f : flights) {
+                row[0] = a;
+                row[1] = f;
+                row[2] = f.getDeparture();
+                row[3] = f.getArrival();
+                row[4] = f.getAvailableSeats(date).size();
+                addToFilterTable(row);
+            }
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
+
     /**
      * Method that populates the table records
      */
@@ -507,28 +427,46 @@ public class HomePage extends javax.swing.JPanel {
         if(airlinesDir.isEmpty())
             return;
         
-        for(Airline item : airlinesDir.getList()) {
+        airlinesDir.getList().stream().map((item) -> {
             row[0] = item;
+            return item;
+        }).map((item) -> {
             row[1] = item.getFlights().size();
+            return item;
+        }).forEachOrdered((_item) -> {
             dtm.addRow(row);
-        }
+        });
+    }
+    
+    /**
+     * Method that populates the table records
+     * @param row Row object to be added to the table
+     */
+    public void addToFilterTable(Object[] row) {
+        DefaultTableModel dtm = 
+                (DefaultTableModel) tblFilteredResults.getModel();
+        dtm.addRow(row);
+    }
+    
+    /**
+     * Method that populates the table records
+     */
+    public void clearFilterTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblAirlines.getModel();
+        Object[] row = new Object[2];
+        dtm.setRowCount(0);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmCreate;
     private javax.swing.JButton btnBook;
-    private javax.swing.JButton btnFilter;
     private javax.swing.ButtonGroup btnGrpTripType;
-    private javax.swing.JButton btnListAll;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnView;
-    private javax.swing.JCheckBox chckBoxAirline;
-    private javax.swing.JCheckBox chckBoxFlight;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblSubtitle;
@@ -538,18 +476,13 @@ public class HomePage extends javax.swing.JPanel {
     private javax.swing.JPanel pnlManage;
     private javax.swing.JPanel pnlSearch;
     private javax.swing.JPanel pnlTitle;
-    private javax.swing.JRadioButton radioRoundTrip;
-    private javax.swing.JRadioButton radioSingle;
     private javax.swing.JScrollPane scrollTblCntr;
     private javax.swing.JSeparator sepFirst;
     private javax.swing.JSeparator sepFirst1;
     private javax.swing.JTabbedPane tabPnlMain;
     private javax.swing.JTable tblAirlines;
     private javax.swing.JTable tblFilteredResults;
-    private javax.swing.JTextField txtAirlineFilter;
-    private javax.swing.JTextField txtFlightFilter;
     private javax.swing.JTextField txtFrom;
-    private javax.swing.JTextField txtReturnDate;
     private javax.swing.JTextField txtStartDate;
     private javax.swing.JTextField txtTo;
     // End of variables declaration//GEN-END:variables

@@ -69,4 +69,21 @@ public class FlightDirectory extends Directory<Flight, String> {
         return newInstance;
     }
 
+    /**
+     * Returns the list of all connecting flights from point A to B
+     * @param from Source
+     * @param to   Destination
+     * @return     ArrayList of connecting flights
+     */
+    public ArrayList<Flight> getConnectingFlights(String from, String to) {
+        ArrayList<Flight> results = new ArrayList<>();
+        getList().stream()
+                .filter((f) -> 
+                        (f.getOrigin().equals(from) && 
+                                f.getDestination().equals(to)))
+                .forEachOrdered((f) -> {
+                    results.add(f);
+                });
+        return results;
+    }
 }

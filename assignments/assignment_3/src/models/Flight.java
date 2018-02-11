@@ -21,6 +21,7 @@ import collections.SeatsDirectory;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import utils.Entity;
 
@@ -201,5 +202,14 @@ public class Flight extends Entity {
      */
     public int getTotalSeats() {
         return seats.size();
+    }
+    
+    /**
+     * Returns the available instance of seats
+     * @param date Day for which the checking has be done
+     * @return Available seats
+     */
+    public ArrayList<Seat> getAvailableSeats(Date date) {
+        return seats.getAvailableSeats(date);
     }
 }
