@@ -31,6 +31,7 @@ import models.Airline;
 import models.Flight;
 import ui.AirlineSpecificForm;
 import ui.AirlineSpecificPage;
+import ui.BookFlightPage;
 import utils.ImageTools;
 
 /**
@@ -47,6 +48,7 @@ public class HomePage extends javax.swing.JPanel {
     private final AirlinesDirectory airlinesDir;
     private final CustomerDirectory customerDir;
     private final JPanel pnlContainer;
+    private Date date;
     
     /**
      * Date Formatter
@@ -64,6 +66,7 @@ public class HomePage extends javax.swing.JPanel {
         this.airlinesDir = airlinesDir;
         this.customerDir = customerDir;
         this.pnlContainer = pnlContainer;
+        this.date = null;
         initComponents();
         populateTable();
         ImageTools.setIcon(lblLogo, "flight-logo.png", 100, 100);
@@ -261,6 +264,11 @@ public class HomePage extends javax.swing.JPanel {
 
         btnBook.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnBook.setText("Book Flight");
+        btnBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlInnerSearchLayout = new javax.swing.GroupLayout(pnlInnerSearch);
         pnlInnerSearch.setLayout(pnlInnerSearchLayout);
@@ -392,7 +400,6 @@ public class HomePage extends javax.swing.JPanel {
             return;
         }
 
-        Date date;
         try {
             date = DATE_FORMAT.parse(txtStartDate.getText());
         } catch (ParseException ex) {
@@ -415,6 +422,27 @@ public class HomePage extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
+        int selectedRowIndex = tblFilteredResults.getSelectedRow();
+        
+        if(selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row first!");
+            return;
+        }
+        
+        Airline airline = 
+                (Airline) tblFilteredResults.getValueAt(selectedRowIndex, 0);
+        Flight flight = 
+                (Flight) tblFilteredResults.getValueAt(selectedRowIndex, 1);
+        
+        BookFlightPage createAirlineForm = 
+                    new BookFlightPage(pnlSearch, airline, flight, 
+                                                             customerDir, date);
+        pnlSearch.add(createAirlineForm);
+        CardLayout layout = (CardLayout) pnlSearch.getLayout();
+        layout.next(pnlSearch);
+    }//GEN-LAST:event_btnBookActionPerformed
 
     /**
      * Method that populates the table records
@@ -449,12 +477,21 @@ public class HomePage extends javax.swing.JPanel {
     }
     
     /**
-     * Method that populates the table records
+     * Method that clears the table records
      */
     public void clearFilterTable() {
-        DefaultTableModel dtm = (DefaultTableModel) tblAirlines.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) tblFilteredResults.getModel();
         Object[] row = new Object[2];
         dtm.setRowCount(0);
+    }
+    
+    /**
+     * Method to clear all search fields
+     */
+    public void clearFilterFields() {
+        txtFrom.setText("");
+        txtTo.setText("");
+        txtStartDate.setText("");
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

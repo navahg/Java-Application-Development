@@ -41,6 +41,16 @@ public class SeatsDirectory extends Directory<Seat, String> {
     public Seat create() {
         return new Seat(null, null);
     }
+    
+    /**
+     * Creates a seat instance with specified row and col
+     * @param row Seat Row identifier
+     * @param col Seat Column identifier
+     * @return A new Seat Instance
+     */
+    public Seat create(String row, String col) {
+        return new Seat(row, col);
+    }
 
     @Override
     public Seat search(String key, String value) {

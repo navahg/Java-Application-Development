@@ -16,8 +16,21 @@
  */
 package ui;
 
-import utils.ImageTools;
-import java.awt.Graphics;
+import collections.CustomerDirectory;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonModel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import models.Airline;
+import models.Customer;
+import models.Flight;
+import models.Seat;
 
 /**
  * This class renders the Seat Layout of the flight and the layout for the user
@@ -28,17 +41,30 @@ import java.awt.Graphics;
 public class BookFlightPage extends javax.swing.JPanel {
 
     /**
-     * Creates new form BookFlightPage
+     * Declaring member variables
      */
-    public BookFlightPage() {
+    private JPanel pnlSearch;
+    private Flight flight;
+    private Airline airline;
+    private CustomerDirectory customers;
+    private Date date;
+    
+    /**
+     * Creates new form BookFlightPage
+     * @param pnlSearch Parent Container
+     * @param airline   Selected Airline
+     * @param flight    Selected Flight
+     * @param customers Customer Directory
+     */
+    public BookFlightPage(JPanel pnlSearch, Airline airline, Flight flight, 
+            CustomerDirectory customers, Date date) {
+        this.pnlSearch = pnlSearch;
+        this.airline = airline;
+        this.flight = flight;
+        this.customers = customers;
+        this.date = date;
         initComponents();
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(ImageTools.loadImage("seat-layout.jpg", 350, 656), 
-                        0, 0, null);
+        showOnlyAvailableSeats();
     }
 
     /**
@@ -50,21 +76,548 @@ public class BookFlightPage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGrpSeats = new javax.swing.ButtonGroup();
+        splitPaneMain = new javax.swing.JSplitPane();
+        pnlSeats = new javax.swing.JPanel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jRadioButton5 = new javax.swing.JRadioButton();
+        jRadioButton6 = new javax.swing.JRadioButton();
+        jRadioButton7 = new javax.swing.JRadioButton();
+        jRadioButton8 = new javax.swing.JRadioButton();
+        jRadioButton9 = new javax.swing.JRadioButton();
+        jRadioButton10 = new javax.swing.JRadioButton();
+        jRadioButton11 = new javax.swing.JRadioButton();
+        jRadioButton12 = new javax.swing.JRadioButton();
+        jRadioButton13 = new javax.swing.JRadioButton();
+        jRadioButton14 = new javax.swing.JRadioButton();
+        jRadioButton15 = new javax.swing.JRadioButton();
+        jRadioButton16 = new javax.swing.JRadioButton();
+        jRadioButton17 = new javax.swing.JRadioButton();
+        jRadioButton18 = new javax.swing.JRadioButton();
+        jRadioButton19 = new javax.swing.JRadioButton();
+        jRadioButton20 = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        radioAvailable = new javax.swing.JRadioButton();
+        jRadioButton22 = new javax.swing.JRadioButton();
+        radioSelected = new javax.swing.JRadioButton();
+        pnlCustomerDetails = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtFirstName = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtLastName = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        btnBook = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+
         setPreferredSize(new java.awt.Dimension(1360, 768));
+
+        splitPaneMain.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        splitPaneMain.setDividerLocation(500);
+        splitPaneMain.setDividerSize(10);
+
+        pnlSeats.setPreferredSize(new java.awt.Dimension(500, 764));
+
+        btnGrpSeats.add(jRadioButton1);
+        jRadioButton1.setText("1");
+        jRadioButton1.setName("A"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton2);
+        jRadioButton2.setText("1");
+        jRadioButton2.setName("B"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton3);
+        jRadioButton3.setText("1");
+        jRadioButton3.setName("C"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton4);
+        jRadioButton4.setText("1");
+        jRadioButton4.setName("D"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton5);
+        jRadioButton5.setText("2");
+        jRadioButton5.setName("A"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton6);
+        jRadioButton6.setText("2");
+        jRadioButton6.setName("B"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton7);
+        jRadioButton7.setText("2");
+        jRadioButton7.setName("C"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton8);
+        jRadioButton8.setText("2");
+        jRadioButton8.setName("D"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton9);
+        jRadioButton9.setText("3");
+        jRadioButton9.setName("A"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton10);
+        jRadioButton10.setText("3");
+        jRadioButton10.setName("B"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton11);
+        jRadioButton11.setText("3");
+        jRadioButton11.setName("C"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton12);
+        jRadioButton12.setText("3");
+        jRadioButton12.setName("D"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton13);
+        jRadioButton13.setText("4");
+        jRadioButton13.setName("A"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton14);
+        jRadioButton14.setText("4");
+        jRadioButton14.setName("B"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton15);
+        jRadioButton15.setText("4");
+        jRadioButton15.setName("C"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton16);
+        jRadioButton16.setText("4");
+        jRadioButton16.setName("D"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton17);
+        jRadioButton17.setText("5");
+        jRadioButton17.setName("A"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton18);
+        jRadioButton18.setText("5");
+        jRadioButton18.setName("B"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton19);
+        jRadioButton19.setText("5");
+        jRadioButton19.setName("C"); // NOI18N
+
+        btnGrpSeats.add(jRadioButton20);
+        jRadioButton20.setText("5");
+        jRadioButton20.setName("D"); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("A");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("B");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("C");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("D");
+
+        radioAvailable.setText("Available");
+        radioAvailable.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radioAvailableItemStateChanged(evt);
+            }
+        });
+
+        jRadioButton22.setText("Booked");
+        jRadioButton22.setEnabled(false);
+
+        radioSelected.setSelected(true);
+        radioSelected.setText("Selected");
+        radioSelected.setFocusable(false);
+        radioSelected.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                radioSelectedItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlSeatsLayout = new javax.swing.GroupLayout(pnlSeats);
+        pnlSeats.setLayout(pnlSeatsLayout);
+        pnlSeatsLayout.setHorizontalGroup(
+            pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSeatsLayout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addGroup(pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlSeatsLayout.createSequentialGroup()
+                        .addComponent(jRadioButton17)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton18)
+                        .addGap(50, 50, 50)
+                        .addComponent(jRadioButton19)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton20))
+                    .addGroup(pnlSeatsLayout.createSequentialGroup()
+                        .addComponent(jRadioButton13)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton14)
+                        .addGap(50, 50, 50)
+                        .addComponent(jRadioButton15)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton16))
+                    .addGroup(pnlSeatsLayout.createSequentialGroup()
+                        .addComponent(jRadioButton9)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton10)
+                        .addGap(50, 50, 50)
+                        .addComponent(jRadioButton11)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton12))
+                    .addGroup(pnlSeatsLayout.createSequentialGroup()
+                        .addComponent(jRadioButton5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton6)
+                        .addGap(50, 50, 50)
+                        .addComponent(jRadioButton7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton8))
+                    .addGroup(pnlSeatsLayout.createSequentialGroup()
+                        .addGroup(pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(pnlSeatsLayout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlSeatsLayout.createSequentialGroup()
+                                .addComponent(jRadioButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton2)
+                                .addGap(50, 50, 50)
+                                .addComponent(jRadioButton3)))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButton4)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(157, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSeatsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(radioAvailable, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jRadioButton22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radioSelected, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        pnlSeatsLayout.setVerticalGroup(
+            pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSeatsLayout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addGroup(pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jRadioButton4))
+                .addGap(18, 18, 18)
+                .addGroup(pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton5)
+                    .addComponent(jRadioButton6)
+                    .addComponent(jRadioButton7)
+                    .addComponent(jRadioButton8))
+                .addGap(18, 18, 18)
+                .addGroup(pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton9)
+                    .addComponent(jRadioButton10)
+                    .addComponent(jRadioButton11)
+                    .addComponent(jRadioButton12))
+                .addGap(99, 99, 99)
+                .addGroup(pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton13)
+                    .addComponent(jRadioButton14)
+                    .addComponent(jRadioButton15)
+                    .addComponent(jRadioButton16))
+                .addGap(37, 37, 37)
+                .addGroup(pnlSeatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton17)
+                    .addComponent(jRadioButton18)
+                    .addComponent(jRadioButton19)
+                    .addComponent(jRadioButton20))
+                .addGap(129, 129, 129)
+                .addComponent(radioAvailable)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jRadioButton22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(radioSelected)
+                .addContainerGap(149, Short.MAX_VALUE))
+        );
+
+        splitPaneMain.setLeftComponent(pnlSeats);
+
+        jLabel1.setText("First Name");
+
+        jLabel2.setText("Last Name");
+
+        jLabel3.setText("E mail Address");
+
+        jLabel4.setText("Username");
+
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyReleased(evt);
+            }
+        });
+
+        btnBook.setText("Book");
+        btnBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBookActionPerformed(evt);
+            }
+        });
+
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlCustomerDetailsLayout = new javax.swing.GroupLayout(pnlCustomerDetails);
+        pnlCustomerDetails.setLayout(pnlCustomerDetailsLayout);
+        pnlCustomerDetailsLayout.setHorizontalGroup(
+            pnlCustomerDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCustomerDetailsLayout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addGroup(pnlCustomerDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlCustomerDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlCustomerDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3)
+                            .addGroup(pnlCustomerDetailsLayout.createSequentialGroup()
+                                .addGroup(pnlCustomerDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlCustomerDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)))
+                            .addComponent(txtEmail))
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(346, Short.MAX_VALUE))
+        );
+        pnlCustomerDetailsLayout.setVerticalGroup(
+            pnlCustomerDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCustomerDetailsLayout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlCustomerDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlCustomerDetailsLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlCustomerDetailsLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(411, Short.MAX_VALUE))
+        );
+
+        splitPaneMain.setRightComponent(pnlCustomerDetails);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(splitPaneMain, javax.swing.GroupLayout.PREFERRED_SIZE, 1360, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(splitPaneMain, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            String username = txtUsername.getText();
+            if(!"".equals(username)) {
+                Customer cust = customers.search("username", username);
+                if(cust == null)
+                    return;
+                txtFirstName.setText(cust.getFirstName());
+                txtLastName.setText(cust.getLastName());
+                txtEmail.setText(cust.getEmail());
+            }
+        }
+    }//GEN-LAST:event_txtUsernameKeyReleased
+
+    private void radioAvailableItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radioAvailableItemStateChanged
+        radioAvailable.setSelected(false);
+    }//GEN-LAST:event_radioAvailableItemStateChanged
+
+    private void radioSelectedItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radioSelectedItemStateChanged
+        radioSelected.setSelected(true);
+    }//GEN-LAST:event_radioSelectedItemStateChanged
+
+    private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
+        String username = txtUsername.getText();
+        String firstName = txtFirstName.getText();
+        String lastName = txtLastName.getText();
+        String email = txtEmail.getText();
+        
+        if(isAnyOneEmpty(username, firstName, lastName, email)) {
+            JOptionPane.showMessageDialog(null, "All fields are required!");
+            return;
+        }
+        Seat seat = getSelectedSeat();
+        if(seat == null) {
+            JOptionPane.showMessageDialog(null, "Please select a seat!");
+            return;
+        }
+        
+        Customer cust = customers.search("username", username);
+        if(cust == null) {
+            cust = customers.create();
+            cust.setUserName(username);
+            cust.setFirstName(firstName);
+            cust.setLastName(lastName);
+            cust.setEmail(email);
+            customers.add(cust);
+        }
+        
+        seat.bookSeat(date, cust);
+        JOptionPane.showMessageDialog(null, "Seat Booked successfully!");
+        closeThis();
+    }//GEN-LAST:event_btnBookActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        closeThis();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    /**
+     * Method to show only available seats
+     */
+    private void showOnlyAvailableSeats() {
+        ArrayList<String> availableSeats = new ArrayList<>();
+        for(Seat s : flight.getAvailableSeats(date)) {
+            availableSeats.add(s.toString());
+        }
+        
+        int compCount = 0;
+        for(Component c : pnlSeats.getComponents()) {
+            if(c instanceof JRadioButton) {
+                if(compCount == 20)
+                    break;
+                String seat = ((JRadioButton) c).getName() + 
+                              ((JRadioButton) c).getText();
+                if(!availableSeats.contains(seat))
+                    ((JRadioButton) c).setEnabled(false);
+                compCount++;
+            }
+        }
+    }
+    
+    /**
+     * Returns the selected seat
+     * @return Instance of the seat selected, if not null
+     */
+    private Seat getSelectedSeat() {
+        String row = null;
+        String column = null;
+        for(Enumeration<AbstractButton> items = btnGrpSeats.getElements();
+                                                    items.hasMoreElements();) {
+            AbstractButton button = items.nextElement();
+            
+            if(button.isSelected()) {
+                column = button.getName();
+                row = button.getText();
+                break;
+            }
+        }
+        if(row == null || column == null)
+            return null;
+        
+        return flight.getSeats().search(row, column);
+    }
+    
+    /**
+     * Checks if any of the argument is empty
+     * @param args Arguments
+     * @return true is any one is empty
+     */
+    private boolean isAnyOneEmpty(String ...args) {
+        for(String s : args)
+            if("".equals(s))
+                return true;
+        return false;
+    }
+    
+    /**
+     * Method to close this view
+     */
+    public void closeThis() {
+        pnlSearch.remove(this);
+        ((ui.agent.HomePage)pnlSearch.getParent().getParent()).clearFilterTable();
+        CardLayout layout = (CardLayout) pnlSearch.getLayout();
+        layout.previous(pnlSearch);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBook;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.ButtonGroup btnGrpSeats;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton10;
+    private javax.swing.JRadioButton jRadioButton11;
+    private javax.swing.JRadioButton jRadioButton12;
+    private javax.swing.JRadioButton jRadioButton13;
+    private javax.swing.JRadioButton jRadioButton14;
+    private javax.swing.JRadioButton jRadioButton15;
+    private javax.swing.JRadioButton jRadioButton16;
+    private javax.swing.JRadioButton jRadioButton17;
+    private javax.swing.JRadioButton jRadioButton18;
+    private javax.swing.JRadioButton jRadioButton19;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton20;
+    private javax.swing.JRadioButton jRadioButton22;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JRadioButton jRadioButton5;
+    private javax.swing.JRadioButton jRadioButton6;
+    private javax.swing.JRadioButton jRadioButton7;
+    private javax.swing.JRadioButton jRadioButton8;
+    private javax.swing.JRadioButton jRadioButton9;
+    private javax.swing.JPanel pnlCustomerDetails;
+    private javax.swing.JPanel pnlSeats;
+    private javax.swing.JRadioButton radioAvailable;
+    private javax.swing.JRadioButton radioSelected;
+    private javax.swing.JSplitPane splitPaneMain;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtFirstName;
+    private javax.swing.JTextField txtLastName;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

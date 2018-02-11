@@ -46,6 +46,12 @@ public class Flight extends Entity {
     private Date arrival;
     
     /**
+     * Seats configuration
+     */
+    private final String[] SEAT_ROWS;
+    private final String[] SEAT_COLUMNS;
+    
+    /**
      * DateFormat
      */
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("hh:mm a");
@@ -61,6 +67,9 @@ public class Flight extends Entity {
         destination = "n/a";
         departure = new Date(0);
         arrival = new Date(0);
+        SEAT_ROWS = new String[]{"1", "2", "3", "4", "5"};
+        SEAT_COLUMNS = new String[]{"A", "B", "C", "D"};
+        initializeSeats();
     }
     
     @Override
@@ -202,6 +211,17 @@ public class Flight extends Entity {
      */
     public int getTotalSeats() {
         return seats.size();
+    }
+    
+    /**
+     * A method to initialize seats for the flight
+     */
+    private void initializeSeats() {
+        for(String col : SEAT_COLUMNS) {
+            for(String row : SEAT_ROWS) {
+                seats.add(seats.create(row, col));
+            }
+        }
     }
     
     /**

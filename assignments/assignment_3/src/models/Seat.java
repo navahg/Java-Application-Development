@@ -51,7 +51,7 @@ public class Seat extends Entity {
      * @param column Seat column number
      * @param row    Seat row number
      */
-    public Seat(String column, String row) {
+    public Seat(String row, String column) {
         this.column = column;
         this.row = row;
         this.status = new TreeMap<>();
