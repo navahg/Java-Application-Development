@@ -232,7 +232,7 @@ public class FlightSpecificPage extends javax.swing.JPanel {
                 String method = "set" + ((javax.swing.JTextField) c).getName();
                 String value = ((javax.swing.JTextField) c).getText();
                 
-                if(method.contains("Departture") || 
+                if(method.contains("Departure") || 
                         method.contains("Arrival")) {
                     try {
                         final DateFormat DATE_FORMAT =
@@ -272,7 +272,7 @@ public class FlightSpecificPage extends javax.swing.JPanel {
         txtOrigin.setText(flight.getOrigin());
         txtDestination.setText(flight.getDestination());
         txtArrival.setText(flight.getArrival());
-        txtDeparture.setText(flight.getDestination());
+        txtDeparture.setText(flight.getDeparture());
     }
     
     /**
