@@ -108,6 +108,7 @@ public class HomePage extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFilteredResults = new javax.swing.JTable();
         btnBook = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(1360, 768));
 
@@ -270,6 +271,9 @@ public class HomePage extends javax.swing.JPanel {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("mm/dd/yyyy");
+
         javax.swing.GroupLayout pnlInnerSearchLayout = new javax.swing.GroupLayout(pnlInnerSearch);
         pnlInnerSearch.setLayout(pnlInnerSearchLayout);
         pnlInnerSearchLayout.setHorizontalGroup(
@@ -294,7 +298,10 @@ public class HomePage extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
+                                    .addGroup(pnlInnerSearchLayout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel4)))
                                 .addGap(33, 33, 33)
                                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 473, Short.MAX_VALUE))
@@ -322,7 +329,9 @@ public class HomePage extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlInnerSearchLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addGroup(pnlInnerSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -404,7 +413,7 @@ public class HomePage extends javax.swing.JPanel {
             date = DATE_FORMAT.parse(txtStartDate.getText());
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(null, "Not a valid date!");
-            date = new Date();
+            return;
         }
 
         ArrayList<Flight> flights;
@@ -504,6 +513,7 @@ public class HomePage extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblSubtitle;

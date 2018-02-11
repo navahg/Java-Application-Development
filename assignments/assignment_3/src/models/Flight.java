@@ -176,13 +176,10 @@ public class Flight extends Entity {
     /**
      * Sets the departure time of the flight
      * @param departure Departure time of the flight
+     * @throws java.text.ParseException
      */
-    public void setDeparture(String departure) {
-        try {
-            this.departure = DATE_FORMAT.parse(departure);
-        } catch (ParseException ex) {
-            this.departure = new Date();
-        }
+    public void setDeparture(String departure) throws ParseException {
+        this.departure = DATE_FORMAT.parse(departure);
     }
 
     /**
@@ -196,13 +193,10 @@ public class Flight extends Entity {
     /**
      * Sets the arrival time of the flight
      * @param arrival Arrival time of the flight
+     * @throws java.text.ParseException
      */
-    public void setArrival(String arrival) {
-        try {
-            this.arrival = DATE_FORMAT.parse(arrival);
-        } catch (ParseException ex) {
-            this.arrival = new Date();
-        }
+    public void setArrival(String arrival) throws ParseException {
+        this.arrival = DATE_FORMAT.parse(arrival);
     }
     
     /**
