@@ -158,7 +158,7 @@ public class LoginPage extends javax.swing.JPanel {
                         .addComponent(lblRegisterLink)
                         .addGap(21, 21, 21))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDetailsLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addGap(20, 20, 20)
                         .addGroup(pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlDetailsLayout.createSequentialGroup()
                                 .addGap(15, 15, 15)
@@ -173,7 +173,7 @@ public class LoginPage extends javax.swing.JPanel {
                                     .addComponent(lblUsername))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtPassword))))
-                .addContainerGap())
+                .addGap(20, 20, 20))
         );
         pnlDetailsLayout.setVerticalGroup(
             pnlDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +206,7 @@ public class LoginPage extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(pnlDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(860, Short.MAX_VALUE))
+                .addContainerGap(853, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
